@@ -1,0 +1,418 @@
+		byte msgx [30];
+delay(100);
+
+		db_p("Answer msg reaktion ");
+		digitalWrite (ENABLE_PIN, HIGH);  // enable sending
+		delay(5);
+		msgx [0] = 10;
+		  myChannel.sendMsg ((byte *) &msgx, sizeof msgx);
+		delay(1);
+		digitalWrite (ENABLE_PIN, LOW);
+		delay(1);
+		msgx [0] = 11; // Wait before going back to Receive mode
+
+		transmit_buf(&msgx, sizeof(msgx));
+
+		sensordata.receiver = 20;
+		transmit_buf( (byte *) &sensordata, sizeof(sensordata));
+
+
+		digitalWrite (ENABLE_PIN, HIGH);  // enable sending
+		delay(1000);
+		msgx [0] = 12;
+		  myChannel.sendMsg ((byte *) &msgx, sizeof msgx);
+		delay(1000);
+		digitalWrite (ENABLE_PIN, LOW);
+
+		msgx [0] = 13;
+		transmit_buf(&msgx, sizeof(msgx));
+
+		sensordata.receiver = 21;
+		transmit_buf( (byte *) &sensordata, sizeof(sensordata));
+
+		delay(100); // Ausreichend um buffer im empfänger zu leeren
+
+		msgx [0] = 14;
+		transmit_buf(&msgx, sizeof(msgx));
+
+
+		sensordata.receiver = 22;
+		transmit_buf( (byte *) &sensordata, sizeof(sensordata));
+
+
+
+
+
+
+
+
+
+
+schauen dass die baudrate bei beiden gleich ist
+dass trasnsmit grösse kleiner als empfangsbffer beim empfänger ist,
+
+
+Master 05 gamon master07
+#include <RS485_non_blocking.h>
+#include <SoftwareSerial.h>
+
+#define DEBUG
+#include <helper.h>  // debug funktionen
+
+//const byte ENABLE_PIN = 4;
+//const byte LED_PIN = 13;
+//SoftwareSerial rs485 (2, 3);  // receive pin, transmit pin
+//
+const byte ENABLE_PIN = 3;
+const byte LED_PIN = 13;
+SoftwareSerial softserial (10, 11);  // receive pin, transmit pin
+
+int byteReceived;
+// callback routines
+
+size_t fWrite (const byte what)
+{
+  softserial.write (what);
+}
+
+int fAvailable ()
+{
+  return softserial.available ();
+}
+
+int fRead ()
+{
+  return softserial.read ();
+}
+
+RS485 myChannel (fRead, fAvailable, fWrite, 20);  //a maximum buffer length (this only applies for reading).
+
+void setup()
+{
+  Serial.begin(9600);           // Start the built-in serial port
+  Serial.println("Master Device");
+  Serial.println("Type in upper window, press ENTER");
+
+  softserial.begin (9600); // 28800
+  myChannel.begin ();
+
+  pinMode (ENABLE_PIN, OUTPUT);  // driver output enable
+  digitalWrite (ENABLE_PIN, LOW);  // disable sending
+  pinMode (LED_PIN, OUTPUT);  // built-in LED
+}  // end of setup
+
+byte old_level = 0;
+
+void loop()
+{
+
+  if (Serial.available())         // A char(byte) has been entered in the Serial Monitor
+  {
+
+
+    byteReceived = Serial.read();
+    if (byteReceived == 10) return; // Read the byte
+    Serial.print("input: ");
+    Serial.write(byteReceived);
+    Serial.println(" ");
+    Serial.print("byte: ");
+    Serial.println(byteReceived);
+
+
+
+
+
+    digitalWrite (ENABLE_PIN, HIGH);  // enable sending
+
+    // assemble message
+    byte msg [] = {
+      byteReceived,    // device 1
+      2,    // turn light on
+      3,    // turn light on
+      4,    // turn light on
+      //byteReceived
+    };
+
+    //sendMsg (fWrite, msg, sizeof msg);
+    myChannel.sendMsg (msg, sizeof (msg));
+
+    // delay (1000);
+    delay(1);                                        // Wait before going back to Receive mode
+    digitalWrite (ENABLE_PIN, LOW);  // disable sending
+    delay (1);
+  }
+
+
+
+
+
+  // receive response
+
+  if (myChannel.update ())
+  {
+    Serial.println("meine message!");
+    //Serial.write (myChannel.getData (), myChannel.getLength ());
+    // Serial.println ();
+
+    db_px("myChannel.getLength (): ", myChannel.getLength ());
+
+
+
+    //
+    //    struct Transmit_Sensors_Struct       // declaration
+    //    {
+    //      byte receiver = 20;        // An   1: master, 2: brennercontrol
+    //      byte sender = 36;          // Von  1: master, 2: brennercontrol
+    //      byte command = 8;
+    //      byte bad_transmit_count = 5;
+    //      byte transmitted_flag = 0;    // 0 not yet transmitted
+    //      int current_temperature = -900;
+    //      int vorlauf = -900;
+    //      int vorlauf_max = -900;
+    //      int vorlauf_min = -900;
+    //    };
+    //
+    //    struct Transmit_Sensors_Struct Transmit_Sensors;
+    //Transmit_Sensors.sender = 55;
+
+    //Serial.println("initial");
+    //    db_px("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
+    //    db_px("Transmit_Sensors.sender ", Transmit_Sensors.sender);
+    //    db_px("Transmit_Sensors.command ", Transmit_Sensors.command);
+    //    db_px("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
+    //    db_px("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
+    //    db_px("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
+    //    db_px("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
+    //    db_px("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
+    //    db_px("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
+
+    byte buf [100];
+    memcpy(buf, myChannel.getData (), myChannel.getLength ());
+    db_px("buf [0]: ", buf [0]);
+    db_px("buf [1]: ", buf [1]);
+    db_px("buf [2]: ", buf [2]);
+    db_px("buf [3]: ", buf [3]);
+
+    // Struct wiederherstellen
+    // void* vptr_Transmit_Sensors = &Transmit_Sensors;
+    //byte buf[sizeof(Transmit_Sensors_Struct)];
+
+    //    void *buf_P = &buf;    // zeiger auf Buffer
+    //    struct Transmit_Sensors_Struct *Transmit_Sensors_P = NULL;  // zeiger vom typ Transmit_Sensors_Struct auf Transmit_Sensors
+    //    Transmit_Sensors_P = buf_P;   // der Sensor Zeiger zeigt auf den buffer
+    //    db_px("command: ", (*Transmit_Sensors_P).command );   // geht auch
+    //    memcpy(&Transmit_Sensors, Transmit_Sensors_P, sizeof(Transmit_Sensors_Struct));
+    //
+    //    // print all
+    //    db_px("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
+    //    db_px("Transmit_Sensors.sender ", Transmit_Sensors.sender);
+    //    db_px("Transmit_Sensors.command ", Transmit_Sensors.command);
+    //    db_px("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
+    //    db_px("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
+    //    db_px("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
+    //    db_px("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
+    //    db_px("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
+    //    db_px("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
+
+  }
+
+
+
+
+
+  //byte received = recvMsg (fAvailable, fRead, buf, sizeof buf);
+  // db_px("received flag: ",received);
+  //  if (false) {
+  //    Serial.println("received message!");           // Show on Serial Monitor
+  //    Serial.write(byteReceived);
+  //    db_px("buf [0]: ", buf [0]);
+  //    db_px("buf [1]: ", buf [1]);
+  //    db_px("buf [2]: ", buf [2]);
+  //  }
+  //
+
+
+
+}  // end of loop
+
+
+
+
+
+This example detects how long a camera shutter is open by using a change interrupt. At the first transition it gets the time, and at the second one it gets the new time.
+Then the main loop shows the difference.
+Of course this general concept could be applied to anything where you want to time a brief pulse. Tested down to a 50 µS pulse, but it could probably go a bit shorter, as it takes around 5 µS to enter and leave an ISR.
+
+
+// Camera shutter speed timer
+// Author: Nick Gammon
+// Date: 15th January 2012
+
+volatile boolean started;
+volatile unsigned long startTime;
+volatile unsigned long endTime;
+
+// interrupt service routine
+void shutter ()
+{
+  if (started)  
+    endTime = micros ();
+  else 
+    startTime = micros ();
+
+  started = !started;
+
+} // end of shutter
+
+void setup ()
+{
+  Serial.begin (115200);
+  Serial.println ("Shutter test ...");
+  attachInterrupt (digitalPinToInterrupt (2), shutter, CHANGE);
+}  // end of setup
+
+
+void loop ()
+{
+
+  if (endTime)
+  {
+    Serial.print ("Shutter open for ");
+    Serial.print (endTime - startTime);
+    Serial.println (" microseconds.");
+    endTime = 0; 
+  }  
+
+} // end of loop
+
+
+
+
+
+
+
+Example code of a pump timer
+
+
+This was posted on the Arduino forum (by me) of an example of how to make a pump timer. The hardware consisted of a switch (the on/cancel switch) connected to D2 and a "pump time" rotary switch (not a rotary encoder) connected to pins 3 to 11. For example, if the switch was in the 3rd position you would get the pump running for 10 minutes.
+
+The pump was connected to pin 13 via a transistor/relay.
+
+
+// Pump timer
+// Author: Nick Gammon
+// Date: 7th January 2012
+// Released into the public domain.
+
+#include <avr/sleep.h>                  
+
+const int pumpPin = 13;       // output pin for the pump and solenoid (goes to the relay)
+const int buttonPin = 2;      // input pin (for a pushbutton switch)
+const int firstSwitch = 3;    // first switch pin for time rotary button
+const int lastSwitch = 11;    // last switch pin
+const int debounceTime = 20;  // debounce in milliseconds
+const unsigned long delayTime [] = { 2, 5, 10, 15, 20, 30, 45, 46, 120};   // Pump run times in minutes
+unsigned long startPumpTime = 0;           // when pump started
+unsigned long pumpTime;                    // how long to run pump
+volatile boolean buttonPressed;    // set when button pressed                       
+
+// interrupt service routine in sleep mode
+void wake ()
+{
+  sleep_disable ();         // first thing after waking from sleep:
+}  // end of wake
+
+// interrupt service routine when awake and button pressed
+void buttonDown ()                            
+{
+  buttonPressed = true;
+}  // end of buttonDown
+
+void sleepNow ()
+{
+  set_sleep_mode (SLEEP_MODE_PWR_DOWN);   
+  sleep_enable ();          // enables the sleep bit in the mcucr register
+  attachInterrupt (digitalPinToInterrupt (buttonPin), wake, LOW); 
+  sleep_mode ();            // here the device is actually put to sleep!!
+  detachInterrupt (digitalPinToInterrupt (buttonPin));     // stop LOW interrupt
+}  // end of sleepNow
+
+void deBounce ()
+{
+  unsigned long now = millis ();
+  do
+  {
+    // on bounce, reset time-out
+    if (digitalRead (buttonPin) == LOW)
+      now = millis ();
+  } 
+  while (digitalRead (buttonPin) == LOW ||
+    (millis () - now) <= debounceTime);
+
+}  // end of deBounce
+
+void setup()
+{
+  pinMode(pumpPin, OUTPUT);               
+  digitalWrite (buttonPin, HIGH);    // pull-up on button
+  for (int i = firstSwitch; i <= lastSwitch; i++) 
+    digitalWrite (i, HIGH);           // pull-up on switch
+} // end of setup
+
+void loop ()
+{
+
+  // if pump is running, see if time to turn it off
+  if (digitalRead (pumpPin) == HIGH)
+  {
+    if ((millis () - startPumpTime) >= pumpTime || buttonPressed)
+    {
+      digitalWrite (pumpPin, LOW);  
+      deBounce ();
+      buttonPressed = false;
+    }
+    return;  // not time to sleep yet
+  }  // end of pump running
+
+
+  // ------ here if pump not running -----
+
+  // pump not running? sleep then
+  sleepNow ();
+
+  // pump is not running and we woke up, work out how long to run it
+
+  deBounce ();
+  pumpTime = 0;
+
+  EIFR = 1;      // cancel any existing falling interrupt (interrupt 0)
+  attachInterrupt (digitalPinToInterrupt (buttonPin), buttonDown, FALLING);   // ready for button press
+
+  for (int i = firstSwitch; i <= lastSwitch; i++) 
+    if (digitalRead (i) == LOW)
+      pumpTime = delayTime [i - firstSwitch];
+
+  if (pumpTime == 0)
+    return;  // no time selected
+
+  // start pump
+  startPumpTime = millis ();
+  digitalWrite (pumpPin, HIGH);    
+
+  pumpTime *= 60000UL;  // convert minutes to milliseconds
+
+  // pumpTime = 5000;  // FOR TESTING - 5 seconds
+
+}  // end of loop
+
+
+
+Of interest is the deBounce function - that handles the inevitable "bounces" of switch contacts as you open or close them. Without some sort of debouncing handler you might interpret a single button press as 20 presses, making it very hard to actually do anything.
+
+
+
+Above is an image of a switch bouncing, captured on the logic analyzer. You can see from the above, that a simple keypress might result in a dozen or so transitions. On the image each bounce is around 5 mS apart. So we really need to wait for a longer interval to elapse, in which the switch doesn't open/close again.
+
+The debounce handler above waits for 20 milliseconds for the switch to stop bouncing, and if the switch closes again, resets the time interval so it waits another 20 milliseconds. This seemed to work quite well.
+
+The code also demonstrates putting the processor to sleep if it isn't needed (eg. at midnight) so it uses less power. It also shows how the "low" interrupt can be used to wake it up, and the falling interrupt to notice if the switch is pressed while the pump is running (eg., you have watered your plants enough already).

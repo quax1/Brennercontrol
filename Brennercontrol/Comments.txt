@@ -1,0 +1,35 @@
+/*
+ * 
+ * https://github.com/milesburton/Arduino-Temperature-Control-Library/issues/113
+ * the sensor always returns 85°C (error code for reset during conversion). I suspect that somehow, I don't know how, the ESP does not leave the data pin powered anymore.
+ * 
+ * my temporary solution:
+
+ds18b20.setWaitForConversion(false);
+ds18b20.requestTemperatures();
+pinMode(DS18B20_PIN, OUTPUT);
+digitalWrite(DS18B20_PIN, HIGH);
+delay(750);
+Serial.println(ds18b20.getTempCByIndex(0));  
+ * 
+ *  SD Library
+   The library supports FAT16 and FAT32 file systems on standard SD cards and SDHC cards. It uses short 8.3 names for files
+ * 
+ * 
+ *  EEPROM.put( addr_temp_meas_count , temp_meas_count );
+  EEPROM.put( addr_average_temp , average_temp );
+ *       EEPROM.put( addr_min_T10 ,  min_T10 );
+  EEPROM.put( addr_max_T10 ,  max_T10 );
+
+  Brennerlog-5.2
+14:18:22.131 -> Compiled:  Apr  6 2021 22:04:43
+
+
+ * 2Do: Minimale T wird in der Nacht gemessen von 10:00 bis 1000, maximale von 18:00 bis 18:00 
+ * zusätzliche Thermofühler anschliessbar.Werte von gestern merken
+ * LCD entfernen und auf interrupts umbauen mehr Tempfühler einbauen
+ * 
+12:26:19.754 -> gesamt_brenndauer  11976226
+
+
+ */
