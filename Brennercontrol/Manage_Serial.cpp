@@ -74,24 +74,24 @@ void checkSerial(){
 			db_pln("** cmd 1 received - request all data");
 			// transmitted_flag:  100 sensor data, 101 CurrentBurntime, 102  DayAverage, 250  end message
 
-			if (sensordata.transmitted_flag == 0) {    //not yet transmitted
+			if (result.sensordata.transmitted_flag == 0) {    //not yet transmitted
 				db_pln("send sensor data");
-				sensordata.transmitted_flag = 100;
-				transmit_buf(&sensordata, sizeof(sensordata));
+				result.sensordata.transmitted_flag = 100;
+				transmit_buf(&result.sensordata, sizeof(result.sensordata));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
 			}
 
-			if (CurrentBurntime.transmitted_flag == 0) {
+			if (result.CurrentBurntime.transmitted_flag == 0) {
 				db_pln("send CurrentBurntime");
-				CurrentBurntime.transmitted_flag = 101;
-				transmit_buf(&CurrentBurntime, sizeof(CurrentBurntime));
+				result.CurrentBurntime.transmitted_flag = 101;
+				transmit_buf(&result.CurrentBurntime, sizeof(result.CurrentBurntime));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
 			}
 
-			if (DayAverage.transmitted_flag == 0) {
+			if (result.DayAverage.transmitted_flag == 0) {
 				db_pln("send DayAverage");
-				DayAverage.transmitted_flag = 102;
-				transmit_buf(&DayAverage, sizeof(DayAverage));
+				result.DayAverage.transmitted_flag = 102;
+				transmit_buf(&result.DayAverage, sizeof(result.DayAverage));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
 			}
 

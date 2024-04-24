@@ -83,7 +83,7 @@ int average_temp = 0;
 //  unsigned long gesamt_brenndauer = 0;
 //  unsigned int burn_day = 0;
 //};
-struct DayAverageStruct DayAverage;
+// struct DayAverageStruct DayAverage;
 
 
 //struct Transmit_Sensors_Struct       // declaration
@@ -99,7 +99,7 @@ struct DayAverageStruct DayAverage;
 //  int vorlauf_min = -900;
 //};
 
- struct Transmit_Sensors_Struct sensordata;
+ // struct Transmit_Sensors_Struct result.sensordata;
 
 // struct CurrentBurntimeStruct       // declaration
 // {
@@ -114,8 +114,8 @@ struct DayAverageStruct DayAverage;
 // };
 
 
-struct CurrentBurntimeStruct CurrentBurntime;
-
+// struct CurrentBurntimeStruct CurrentBurntime;
+struct all_result_data_objects result;
 
 
 //byte lasthour = 0;  // remembers last hour

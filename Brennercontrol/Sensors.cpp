@@ -30,26 +30,26 @@ void update_sensor_data(unsigned int interval_s){
 
 		//struct Transmit_Sensors_Struct sensordata;
 
-		sensordata.transmitted_flag = 0;
-		sensordata.current_temperature = Temperature10;
-		sensordata.vorlauf = Temperature10_vorlauf;
-		sensordata.vorlauf_max	= max_T10_vorlauf;
-		sensordata.vorlauf_min = min_T10_vorlauf;
+		result.sensordata.transmitted_flag = 0;
+		result.sensordata.current_temperature = Temperature10;
+		result.sensordata.vorlauf = Temperature10_vorlauf;
+		result.sensordata.vorlauf_max	= max_T10_vorlauf;
+		result.sensordata.vorlauf_min = min_T10_vorlauf;
 
 	    // reset  counters
 	    max_T10_vorlauf = -32768 ;
 	    min_T10_vorlauf =  32767;
 
 		//dumpddata
-		db_px("sensordata.receiver ", sensordata.receiver);
-		db_px("sensordata.sender ", sensordata.sender);
-		db_px("sensordata.command ", sensordata.command);
-		db_px("sensordata.bad_transmit_count ", sensordata.bad_transmit_count);
-		db_px("sensordata.transmitted_flag ", sensordata.transmitted_flag);
-		db_px("sensordata.current_temperature ", sensordata.current_temperature);
-		db_px("sensordata.vorlauf ", sensordata.vorlauf);
-		db_px("sensordata.vorlauf_max ", sensordata.vorlauf_max);
-		db_px("sensordata.vorlauf_min ", sensordata.vorlauf_min);
+		db_px("sensordata.receiver ", result.sensordata.receiver);
+		db_px("sensordata.sender ", result.sensordata.sender);
+		db_px("sensordata.command ", result.sensordata.command);
+		db_px("sensordata.bad_transmit_count ", result.sensordata.bad_transmit_count);
+		db_px("sensordata.transmitted_flag ", result.sensordata.transmitted_flag);
+		db_px("sensordata.current_temperature ", result.sensordata.current_temperature);
+		db_px("sensordata.vorlauf ", result.sensordata.vorlauf);
+		db_px("sensordata.vorlauf_max ", result.sensordata.vorlauf_max);
+		db_px("sensordata.vorlauf_min ", result.sensordata.vorlauf_min);
 
 
 	}

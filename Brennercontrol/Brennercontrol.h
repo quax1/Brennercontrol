@@ -209,7 +209,7 @@ struct Transmit_Sensors_Struct       // declaration
   int vorlauf_min = -900;
   unsigned long gesamt_brenndauer = 0;
 };
-extern struct Transmit_Sensors_Struct sensordata;
+//extern struct Transmit_Sensors_Struct sensordata;
 
 struct DayAverageStruct
 {
@@ -226,7 +226,7 @@ struct DayAverageStruct
   unsigned long gesamt_brenndauer = 0;
   unsigned int burn_day = 0;
 };
-extern struct DayAverageStruct DayAverage;
+// extern struct DayAverageStruct DayAverage;
 
 
 struct CurrentBurntimeStruct       // declaration
@@ -240,10 +240,16 @@ struct CurrentBurntimeStruct       // declaration
 	unsigned long gesamt_brenndauer = 0;
 	unsigned int current_burntime 	= 0;   // burntime in 0.1s units
 };
-extern struct CurrentBurntimeStruct CurrentBurntime;
+//extern struct CurrentBurntimeStruct CurrentBurntime;
 
 
-
+struct all_result_data_objects
+{
+	struct Transmit_Sensors_Struct sensordata;
+	struct DayAverageStruct DayAverage;
+	struct CurrentBurntimeStruct CurrentBurntime;
+};
+extern struct all_result_data_objects result;
 
 bool getTemp10_index(int &temperature1, byte index);
 void check_serial();

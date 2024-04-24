@@ -59,14 +59,14 @@ void Day_average_publish(){
 		//	struct DayAverageStruct DayAverage;
 
 
-		DayAverage.transmitted_flag = 0;
-		DayAverage.bad_transmit_count = bad_transmit_count;
-		DayAverage.temp_meas_count = temp_meas_count;
-		DayAverage.average_temp = average_temp;
-		DayAverage.max_T10 = max_T10;  // new
-		DayAverage.min_T10 = min_T10;  // new
-		DayAverage.gesamt_brenndauer = gesamt_brenndauer;     //new
-		DayAverage.burn_day = gesamt_brenndauer - gesamt_brenndauer_last_day;
+		result.DayAverage.transmitted_flag = 0;
+		result.DayAverage.bad_transmit_count = bad_transmit_count;
+		result.DayAverage.temp_meas_count = temp_meas_count;
+		result.DayAverage.average_temp = average_temp;
+		result.DayAverage.max_T10 = max_T10;  // new
+		result.DayAverage.min_T10 = min_T10;  // new
+		result.DayAverage.gesamt_brenndauer = gesamt_brenndauer;     //new
+		result.DayAverage.burn_day = gesamt_brenndauer - gesamt_brenndauer_last_day;
 
 
 
