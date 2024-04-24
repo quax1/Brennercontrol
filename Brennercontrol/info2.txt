@@ -1,3 +1,10 @@
+to do
+
+Min Max Vorlauf eigenes sampling intervall eigene Struktur.
+
+
+
+
 		byte msgx [30];
 delay(100);
 

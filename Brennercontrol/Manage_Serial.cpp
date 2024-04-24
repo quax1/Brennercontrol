@@ -42,8 +42,11 @@ void checkSerial(){
 		db_px("sender   buf [1]: ", buf [1]);
 		db_px("command  buf [2]: ", buf [2]);
 
+		byte receiver = buf [0];
+		byte sender   = buf [1];
+		byte command  = buf [2];
 
-		if (buf [0] != 1) {
+		if (receiver != 1) {
 			Serial.println("not my device");
 			return;  // not my device
 		}
@@ -64,8 +67,9 @@ void checkSerial(){
 		//		struct Transmit_Sensors_Struct Transmit_Sensors1;
 
 		//  command byte...
-		switch (buf [2]) {
-		case 1:    //
+		switch (command) {
+
+		case 1:    //   send all data objects that are new
 		{
 			db_pln("** cmd 1 received - request all data");
 			// transmitted_flag:  100 sensor data, 101 CurrentBurntime, 102  DayAverage, 250  end message
@@ -109,9 +113,29 @@ void checkSerial(){
 		}
 		break;
 
-		case 2:    //
+		case 100:    //
 		{
-			db_pln("** cmd 2 received - rxxxx");
+			db_pln("** cmd 100 received - device configuration");
+			// Datastructure for device configuration Burner Control
+			struct device_configuration
+			{
+			  byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
+			  byte dcVersion = 0;
+			  bool  transmit_each_burn = false;
+			  unsigned int measure_sensors_intervall_s = 20; 	// intervall in s  read all local sensors
+			  unsigned int update_sensor_data_intervall_s = 20;	// intervall in s   provide data at Serial Interface
+			} ;
+			extern struct device_configuration dc;
+
+			// buf is a device configuration - copy buffer into data structure
+
+
+			memcpy(&dc, &buf, sizeof(dc));
+			db_px("dc.transmit_each_burn", 				dc.transmit_each_burn);
+			db_px("dc.measure_sensors_intervall_s", 	dc.measure_sensors_intervall_s);
+			db_px("dc.transmit_each_burn", 				dc.transmit_each_burn);
+			db_px("dc.update_sensor_data_intervall_s", 	dc.update_sensor_data_intervall_s);
+
 		}
 		break;
 

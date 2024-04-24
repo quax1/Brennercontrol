@@ -150,7 +150,7 @@ struct BurnDataStruct       // declaration
 
 
 
-// Datastructure for device configuration heating
+// Datastructure for device configuration Burner Control
 struct device_configuration
 {
   byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
@@ -205,7 +205,7 @@ struct Transmit_Sensors_Struct       // declaration
 
   int current_temperature = -900;
   int vorlauf = -900;
-  int vorlauf_max = -900;
+  int vorlauf_max = -900;        // falsch hier
   int vorlauf_min = -900;
   unsigned long gesamt_brenndauer = 0;
 };
