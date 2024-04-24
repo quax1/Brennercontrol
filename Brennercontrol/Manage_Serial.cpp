@@ -117,19 +117,17 @@ void checkSerial(){
 		{
 			db_pln("** cmd 100 received - device configuration");
 			// Datastructure for device configuration Burner Control
-			struct device_configuration
-			{
-			  byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
-			  byte dcVersion = 0;
-			  bool  transmit_each_burn = false;
-			  unsigned int measure_sensors_intervall_s = 20; 	// intervall in s  read all local sensors
-			  unsigned int update_sensor_data_intervall_s = 20;	// intervall in s   provide data at Serial Interface
-			} ;
-			extern struct device_configuration dc;
+			//			struct device_configuration
+			//			{
+			//			  byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
+			//			  byte dcVersion = 0;
+			//			  bool  transmit_each_burn = false;
+			//			  unsigned int measure_sensors_intervall_s = 20; 	// intervall in s  read all local sensors
+			//			  unsigned int update_sensor_data_intervall_s = 20;	// intervall in s   provide data at Serial Interface
+			//			} ;
+			//			extern struct device_configuration dc;
 
 			// buf is a device configuration - copy buffer into data structure
-
-
 			memcpy(&dc, &buf, sizeof(dc));
 			db_px("dc.transmit_each_burn", 				dc.transmit_each_burn);
 			db_px("dc.measure_sensors_intervall_s", 	dc.measure_sensors_intervall_s);
@@ -138,10 +136,6 @@ void checkSerial(){
 
 		}
 		break;
-
-
-
-
 
 		} // end of switch
 	} // mychannel update
