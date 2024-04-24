@@ -7,7 +7,7 @@
 
 #include "Brennercontrol.h"
 
-void publish_sensors(unsigned int interval_s){
+void update_sensor_data(unsigned int interval_s){
 	timenow = millis();
 	static unsigned long last_time_this = timenow;
 	if ( ( ((timenow - last_time_this) > 1L * interval_s * 1000L) || (firstloop) ) && BurnerState_idle  )  {
@@ -32,13 +32,13 @@ void publish_sensors(unsigned int interval_s){
 
 		sensordata.transmitted_flag = 0;
 		sensordata.current_temperature = Temperature10;
-		sensordata.vorlauf = Temperature10b;
-		sensordata.vorlauf_max	= max_T10b;
-		sensordata.vorlauf_min = min_T10b;
+		sensordata.vorlauf = Temperature10_vorlauf;
+		sensordata.vorlauf_max	= max_T10_vorlauf;
+		sensordata.vorlauf_min = min_T10_vorlauf;
 
 	    // reset  counters
-	    max_T10b = -32768 ;
-	    min_T10b =  32767;
+	    max_T10_vorlauf = -32768 ;
+	    min_T10_vorlauf =  32767;
 
 		//dumpddata
 		db_px("sensordata.receiver ", sensordata.receiver);
@@ -81,16 +81,16 @@ void measure_sensors(unsigned int interval_s){
 
 
 		// Vorlauf
-		if ( getTemp10_index(Temperature10b, 1) )    // meas. is valid
+		if ( getTemp10_index(Temperature10_vorlauf, 1) )    // meas. is valid
 		{
 			T_fail_count = 0;
 			//  store max and min temperature of Vorlauf
-			if (Temperature10b > max_T10b) max_T10b = Temperature10b;
-			if (Temperature10b < min_T10b) min_T10b = Temperature10b;
+			if (Temperature10_vorlauf > max_T10_vorlauf) max_T10_vorlauf = Temperature10_vorlauf;
+			if (Temperature10_vorlauf < min_T10_vorlauf) min_T10_vorlauf = Temperature10_vorlauf;
 
-			db_px("Vorlauf Temperature10b: ", Temperature10b);
-			db_px("Vorlauf max_T10b: ", max_T10b);
-			db_px("Vorlauf min_T10b: ", min_T10b);
+			db_px("T Vorlauf act: ", Temperature10_vorlauf);
+			db_px("T Vorlauf max ", max_T10_vorlauf);
+			db_px("T Vorlauf min ", min_T10_vorlauf);
 		}
 
 //		// assemble message

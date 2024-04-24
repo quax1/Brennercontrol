@@ -95,11 +95,11 @@ extern bool lastBurnerState_idle;
 extern unsigned long gesamt_brenndauer;
 extern tmElements_t tm;
 extern int Temperature10 ;    // -900 is invalid
-extern int Temperature10b ;    // -900 is invalid
+extern int Temperature10_vorlauf ;    // -900 is invalid
 extern int max_T10;  // new
 extern int min_T10;  // new
-extern int max_T10b;  // new  Vorlauf
-extern int min_T10b;  // new  Vorlauf
+extern int max_T10_vorlauf;  // new  Vorlauf
+extern int min_T10_vorlauf;  // new  Vorlauf
 extern byte temp_meas_count;
 extern int average_temp;
 // bool send_current_T = 0;    // send once the current Temperature reading
@@ -156,8 +156,8 @@ struct device_configuration
   byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
   byte dcVersion = 0;
   bool  transmit_each_burn = false;
-  unsigned int transmit_temperature_s = 3600;  // intervall in s, 0= off
-  byte radio_PALevel = 0;
+  unsigned int measure_sensors_intervall_s = 20; 	// intervall in s  read all local sensors
+  unsigned int update_sensor_data_intervall_s = 20;	// intervall in s   provide data at Serial Interface
 } ;
 extern struct device_configuration dc;
 
@@ -207,6 +207,7 @@ struct Transmit_Sensors_Struct       // declaration
   int vorlauf = -900;
   int vorlauf_max = -900;
   int vorlauf_min = -900;
+  unsigned long gesamt_brenndauer = 0;
 };
 extern struct Transmit_Sensors_Struct sensordata;
 
@@ -290,7 +291,7 @@ void check_burner();
 //void check_burner_isr_int0();
 void checkSerial();
 void measure_sensors(unsigned int interval_s);
-void publish_sensors(unsigned int interval_s);
+void update_sensor_data(unsigned int interval_s);
 //void evaluate_joystick();
 //#line 111 "/home/matthias/Arduino/00 Sketch/00 Brennerlogger/Brennerlog_6.0/Burner.ino"
 //void update_display(unsigned long gesamt_brenndauer, int Temperature10 );

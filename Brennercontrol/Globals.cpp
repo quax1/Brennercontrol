@@ -55,11 +55,11 @@ bool lastBurnerState_idle = true;
 unsigned long gesamt_brenndauer = 0;
 tmElements_t tm;
 int Temperature10 = -900;    // -900 is invalid
-int Temperature10b = -900;    // -900 is invalid
+int Temperature10_vorlauf = -900;    // -900 is invalid
 int max_T10 = -32768;  // new
 int min_T10 = 32767;  // new
-int max_T10b = -32768;  // new
-int min_T10b = 32767;  // new
+int max_T10_vorlauf = -32768;  // new
+int min_T10_vorlauf = 32767;  // new
 byte temp_meas_count = 0;
 int average_temp = 0;
 // bool send_current_T = 0;    // send once the current Temperature reading
