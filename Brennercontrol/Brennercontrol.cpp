@@ -119,9 +119,9 @@ void loop()
 
 	checkSerial();
 
-	measure_sensors(dc.measure_sensors_intervall_s);    // intervall in s  read all local sensors
+	measure_sensors(dc.t_meas_sensors);    // intervall in s  read all local sensors
 
-	update_sensor_data(dc.update_sensor_data_intervall_s);   // intervall in s   provide data at Serial Interface
+	update_sensor_data(dc.t_publish_sensors);   // intervall in s   provide data at Serial Interface
 
 	check_burner();
 

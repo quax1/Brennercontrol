@@ -130,9 +130,9 @@ void checkSerial(){
 			// buf is a device configuration - copy buffer into data structure
 			memcpy(&dc, &buf, sizeof(dc));
 			db_px("dc.transmit_each_burn", 				dc.transmit_each_burn);
-			db_px("dc.measure_sensors_intervall_s", 	dc.measure_sensors_intervall_s);
+			db_px("dc.measure_sensors_intervall_s", 	dc.t_meas_sensors);
 			db_px("dc.transmit_each_burn", 				dc.transmit_each_burn);
-			db_px("dc.update_sensor_data_intervall_s", 	dc.update_sensor_data_intervall_s);
+			db_px("dc.update_sensor_data_intervall_s", 	dc.t_publish_sensors);
 
 		}
 		break;

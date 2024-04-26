@@ -128,22 +128,22 @@ extern int  lastday;
 // 2: Transmit only current temperature to Master  3:  current burntime & temperature
 
 
-struct BurnDataStruct       // declaration
-{
-  byte command = 0;
-  unsigned long gesamt_brenndauer = 0;
-  unsigned int burn_day = 0;
-  unsigned int current_burntime = 0;   // burntime in 0.1s units
-  int average_temp = -900;
-  int current_temperature = -900;
-  int max_T10 = -32768 ;  //
-  int min_T10 =  32767;  //
-  byte temp_meas_count = 0;
-  byte bad_transmit_count = 0;
-  int vorlauf = -900;
-  int vorlauf_max = -900;
-  int vorlauf_min = -900;
-};
+//struct BurnDataStructx       // declaration
+//{
+//  byte command = 0;
+//  unsigned long gesamt_brenndauer = 0;
+//  unsigned int burn_day = 0;
+//  unsigned int current_burntime = 0;   // burntime in 0.1s units
+//  int average_temp = -900;
+//  int current_temperature = -900;
+//  int max_T10 = -32768 ;  //
+//  int min_T10 =  32767;  //
+//  byte temp_meas_count = 0;
+//  byte bad_transmit_count = 0;
+//  int vorlauf = -900;
+//  int vorlauf_max = -900;
+//  int vorlauf_min = -900;
+//};
 
 
 
@@ -156,8 +156,8 @@ struct device_configuration
   byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
   byte dcVersion = 0;
   bool  transmit_each_burn = false;
-  unsigned int measure_sensors_intervall_s = 20; 	// intervall in s  read all local sensors
-  unsigned int update_sensor_data_intervall_s = 20;	// intervall in s   provide data at Serial Interface
+  unsigned int t_meas_sensors = 20; 	// intervall in s  read all local sensors
+  unsigned int t_publish_sensors = 20;	// intervall in s   provide data at Serial Interface
 } ;
 extern struct device_configuration dc;
 
