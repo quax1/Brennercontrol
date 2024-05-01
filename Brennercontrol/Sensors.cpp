@@ -7,10 +7,10 @@
 
 #include "Brennercontrol.h"
 
-void update_sensor_data(unsigned int interval_s){
+void update_sensor_data(unsigned int interval_s, bool Firstrun){
 	timenow = millis();
 	static unsigned long last_time_this = timenow;
-	if ( ( ((timenow - last_time_this) > 1L * interval_s * 1000L) || (firstloop) ) && BurnerState_idle  )  {
+	if ( ( ((timenow - last_time_this) > 1L * interval_s * 1000L) || (Firstrun) ) && BurnerState_idle  )  {
 		last_time_this = timenow;
 
 		db_p("publish sensor data");
@@ -33,8 +33,8 @@ void update_sensor_data(unsigned int interval_s){
 		result.sensordata.transmitted_flag = 0;
 		result.sensordata.current_temperature = Temperature10;
 		result.sensordata.vorlauf = Temperature10_vorlauf;
-		result.sensordata.vorlauf_max	= max_T10_vorlauf;
-		result.sensordata.vorlauf_min = min_T10_vorlauf;
+		//result.sensordata.vorlauf_max	= max_T10_vorlauf;
+		//result.sensordata.vorlauf_min = min_T10_vorlauf;
 
 	    // reset  counters
 	    max_T10_vorlauf = -32768 ;
@@ -44,23 +44,23 @@ void update_sensor_data(unsigned int interval_s){
 		db_px("sensordata.receiver ", result.sensordata.receiver);
 		db_px("sensordata.sender ", result.sensordata.sender);
 		db_px("sensordata.command ", result.sensordata.command);
-		db_px("sensordata.bad_transmit_count ", result.sensordata.bad_transmit_count);
+		//db_px("sensordata.bad_transmit_count ", result.sensordata.bad_transmit_count);
 		db_px("sensordata.transmitted_flag ", result.sensordata.transmitted_flag);
 		db_px("sensordata.current_temperature ", result.sensordata.current_temperature);
 		db_px("sensordata.vorlauf ", result.sensordata.vorlauf);
-		db_px("sensordata.vorlauf_max ", result.sensordata.vorlauf_max);
-		db_px("sensordata.vorlauf_min ", result.sensordata.vorlauf_min);
+		//db_px("sensordata.vorlauf_max ", result.sensordata.vorlauf_max);
+		//db_px("sensordata.vorlauf_min ", result.sensordata.vorlauf_min);
 
 
 	}
 
 } // end publish_sensors
 
-void measure_sensors(unsigned int interval_s){
+void measure_sensors(unsigned int interval_s, bool Firstrun){
 	// checks all sensors
 
 	timenow = millis();
-	if ( ( ((timenow - last_time_temp_meas) > 1L * interval_s * 1000L) || (firstloop) ) && BurnerState_idle  )  {
+	if ( ( ((timenow - last_time_temp_meas) > 1L * interval_s * 1000L) || (Firstrun) ) && BurnerState_idle  )  {
 		last_time_temp_meas = timenow;
 
 		db_p("get temperature");

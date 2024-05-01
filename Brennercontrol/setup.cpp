@@ -1,5 +1,11 @@
 #include "Brennercontrol.h"
 
+void startup_pin(const byte pin){
+	pinMode(pin, OUTPUT);
+	digitalWrite(pin, HIGH); delay(100); digitalWrite(pin, LOW); delay(100);
+	digitalWrite(pin, HIGH); delay(100); digitalWrite(pin, LOW);
+}
+
 void setup()
 {
   // initialize Serial ***********************************
@@ -17,6 +23,7 @@ void setup()
 
   pinMode (ENABLE_PIN, OUTPUT);  // driver output enable
    digitalWrite (ENABLE_PIN, LOW);  // disable sending
+   startup_pin(PIN_LED_LIFECHK);
 
   db_pln("*** Debug enabled");
 #ifndef DEBUG    //

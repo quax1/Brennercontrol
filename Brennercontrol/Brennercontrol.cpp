@@ -3,11 +3,11 @@
 
 // Subs
 
-void Day_average_sampling() {
+void Day_average_sampling(bool Firstrun) {
 			// *****   make a measurement every 30 min for average day temperature
 
 	timenow = millis();
-	if (( ((timenow - last_time_average_Temp) > 30L * 60L * 1000L) || (firstloop) )  && BurnerState_idle  ) {
+	if (( ((timenow - last_time_average_Temp) > 30L * 60L * 1000L) || (Firstrun) )  && BurnerState_idle  ) {
 		last_time_average_Temp = timenow;
 		db_p("*average"); db_m;
 
@@ -60,7 +60,7 @@ void Day_average_publish(){
 
 
 		result.DayAverage.transmitted_flag = 0;
-		result.DayAverage.bad_transmit_count = bad_transmit_count;
+		//result.DayAverage.bad_transmit_count = bad_transmit_count;
 		result.DayAverage.temp_meas_count = temp_meas_count;
 		result.DayAverage.average_temp = average_temp;
 		result.DayAverage.max_T10 = max_T10;  // new
@@ -89,13 +89,29 @@ void Day_average_publish(){
 	}
 }  // day average
 
+void lifecheck_blink_LED(const bool Firstrun){
+	// blinks if not stuck
+	static unsigned long timer_lifecheck =0 ;
+	static bool lifecheck_on = 1 ;
+	if (((millis() - timer_lifecheck) > 3000L) || Firstrun) {
+		timer_lifecheck = millis();
+		//if (Daymode) digitalWrite(PIN_LED_LIFECHK, HIGH);
+		digitalWrite(PIN_LED_LIFECHK, HIGH);
+		lifecheck_on = true;
+	}
+	if (((millis() - timer_lifecheck) > 100L) && lifecheck_on) {
+		lifecheck_on = false;
+		digitalWrite(PIN_LED_LIFECHK, LOW);
+	}
+}  //lifecheck_blink_LED
+
 void loop()
 {
-
+	static bool Firstrun =true;
 
 	// *******  get time and update display
 	timenow = millis();
-	if (( ((timenow - last_time_display) > 3000L) || (firstloop) )  && BurnerState_idle  ) {
+	if (( ((timenow - last_time_display) > 3000L) || (Firstrun) )  && BurnerState_idle  ) {
 		last_time_display = timenow;
 		RTC.read(tm);
 		//update_display( gesamt_brenndauer, Temperature10 ) ;
@@ -117,20 +133,21 @@ void loop()
 	//  evaluate_joystick();
 	//
 
-	checkSerial();
+	checkSerial_incoming_msg();
 
-	measure_sensors(dc.t_meas_sensors);    // intervall in s  read all local sensors
+	measure_sensors(dc.t_meas_sensors, Firstrun);    // intervall in s  read all local sensors
 
-	update_sensor_data(dc.t_publish_sensors);   // intervall in s   provide data at Serial Interface
+	update_sensor_data(dc.t_publish_sensors, Firstrun);   // intervall in s   provide data at Serial Interface
 
 	check_burner();
 
-	Day_average_sampling(); // *****   make a measurement every 30 min for average day temperature
+	Day_average_sampling(Firstrun); // *****   make a measurement every 30 min for average day temperature
 
 	Day_average_publish();  // ******************* its a new day - write average from yesterday
 
+	lifecheck_blink_LED(Firstrun);
+	if (Firstrun)  Firstrun = false;
 
-	if (firstloop)  firstloop = false;
 
 }   // end of main loop
 

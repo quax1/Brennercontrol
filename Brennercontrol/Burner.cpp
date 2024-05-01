@@ -118,7 +118,7 @@ void check_burner()
 				//        struct CurrentBurntimeStruct CurrentBurntime;
 
 				// create data structure
-				result.CurrentBurntime.bad_transmit_count 	= bad_transmit_count;
+				//result.CurrentBurntime.bad_transmit_count 	= bad_transmit_count;
 				result.CurrentBurntime.transmitted_flag 	= 0;		// 0 not yet transmitted
 				result.CurrentBurntime.gesamt_brenndauer 	= gesamt_brenndauer;
 				result.CurrentBurntime.current_burntime 	= current_burntime;     // long to int - but OK

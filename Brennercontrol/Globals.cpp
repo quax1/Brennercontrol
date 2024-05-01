@@ -15,27 +15,23 @@ const byte BrennerSensorPin = A0; //A3; // must be 2 if interupt is used   //A3;
 const byte BurnIndicatorLEDPin = A1;//9;
 //
 
+// Soft Serial
 const byte ENABLE_PIN = 3;
 const unsigned long BAUD_RATE = 9600;  // 9600
 const byte RECEIVE_BUFFER_SIZE = 50;  //
 SoftwareSerial softserial (10, 11);  // receive pin, transmit pin
-
-
 void fWrite (const byte what)
 {
 	softserial.write (what);
 }
-
 int fAvailable ()
 {
 	return softserial.available ();
 }
-
 int fRead ()
 {
 	return softserial.read ();
 }
-
 RS485 myChannel (fRead, fAvailable, fWrite, RECEIVE_BUFFER_SIZE);  //a maximum buffer length (this only applies for reading).
 
 
@@ -154,15 +150,16 @@ int lastday = 0;
 //};
 
 // Datastructure for device configuration heating
-/* struct device_configuration
- {
- byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
- byte dcVersion = 0;
- bool  transmit_each_burn = false;
- unsigned int transmit_temperature_s = 3600;  // intervall in s, 0= off
- byte radio_PALevel = 0;
- } dc; */
-struct device_configuration dc;
+/*
+struct device_configuration
+{
+  byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
+  byte dcVersion = 0;
+  bool  transmit_each_burn = false;
+  unsigned int t_meas_sensors = 20; 	// intervall in s  read all local sensors
+  unsigned int t_publish_sensors = 20;	// intervall in s   provide data at Serial Interface
+} ; */
+struct device_configuration_burner_struct dc;
 
 byte bad_transmit_count = 0;
 byte T_fail_count = 0;  // failed temperature meeasssurements
@@ -171,7 +168,7 @@ byte T_fail_count = 0;  // failed temperature meeasssurements
 
 // global variables
 // char strBuffer20[20] = "blabla";
-bool firstloop = true;
+//bool firstloop = true;
 
 // unsigned int current_burntime = 0;   // current burntime in 0.1 s   123 = 12.3 sec
 

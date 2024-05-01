@@ -27,7 +27,7 @@ void transmit_buf(void* vptr_buf, unsigned int bufsize){
 //    db_px("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
 //}
 
-void checkSerial(){
+void checkSerial_incoming_msg(){
 
 	if (myChannel.update ())
 	{
@@ -46,27 +46,12 @@ void checkSerial(){
 		byte sender   = buf [1];
 		byte command  = buf [2];
 
-		if (receiver != 1) {
+		if (receiver != 2) {
 			Serial.println("not my device");
 			return;  // not my device
 		}
 
-		//		struct Transmit_Sensors_Struct       // declaration
-		//		{
-		//			byte receiver = 6;        // An   1: master, 2: brennercontrol
-		//			byte sender = 7;          // Von  1: master, 2: brennercontrol
-		//			byte command = 8;                 // 0:empty answer,  1: current sensor values, 2: day average
-		//			byte bad_transmit_count = 9;
-		//			byte transmitted_flag = 0;    // 0 not yet transmitted
-		//			int current_temperature = -900;
-		//			int vorlauf = -900;
-		//			int vorlauf_max = -900;
-		//			int vorlauf_min = -900;
-		//		};
-		//
-		//		struct Transmit_Sensors_Struct Transmit_Sensors1;
 
-		//  command byte...
 		switch (command) {
 
 		case 1:    //   send all data objects that are new
@@ -76,7 +61,7 @@ void checkSerial(){
 
 			if (result.sensordata.transmitted_flag == 0) {    //not yet transmitted
 				db_pln("send sensor data");
-				result.sensordata.transmitted_flag = 100;
+				result.sensordata.transmitted_flag = 100;  // steht im command byte !
 				transmit_buf(&result.sensordata, sizeof(result.sensordata));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
 			}
@@ -96,18 +81,14 @@ void checkSerial(){
 			}
 
 			// send end message
-			struct NoDataMsg_Struct       // declaration
-			{
-				byte receiver = 1;        // An   1: master, 2: brennercontrol
-				byte sender = 2;          // Von  1: master, 2: brennercontrol
-				byte command = 0;                 // 0:empty answer,  1: current sensor values, 2: day average
-				byte bad_transmit_count = 0;
-				byte transmitted_flag = 250;    // 0 not yet transmitted
-			};
-			struct NoDataMsg_Struct  NoDataMsg;
-			db_pln("last msg - No Data");
-			NoDataMsg.transmitted_flag = 250;
-			transmit_buf(&NoDataMsg, sizeof(NoDataMsg));
+
+			struct EndMsg_Struct  EndMsg;
+			EndMsg.receiver = 1; 		// An    1: master, 2: brennercontrol
+			EndMsg.sender 	= 2; 		// Von  1: master, 2: brennercontrol
+			EndMsg.command 	= 0;   		// 0:END message or no Data to send,  1: current sensor values, 2: day average
+			db_pln("send END msg");
+			//NoDataMsg.transmitted_flag = 250;
+			transmit_buf(&EndMsg, sizeof(EndMsg));
 			delay(100); // Ausreichend um buffer im empfänger zu leeren
 
 		}
@@ -117,23 +98,32 @@ void checkSerial(){
 		{
 			db_pln("** cmd 100 received - device configuration");
 			// Datastructure for device configuration Burner Control
-			//			struct device_configuration
-			//			{
-			//			  byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
-			//			  byte dcVersion = 0;
-			//			  bool  transmit_each_burn = false;
-			//			  unsigned int measure_sensors_intervall_s = 20; 	// intervall in s  read all local sensors
-			//			  unsigned int update_sensor_data_intervall_s = 20;	// intervall in s   provide data at Serial Interface
-			//			} ;
-			//			extern struct device_configuration dc;
+			/*
+			struct Rx_device_configuration_burner
+			{
+			  byte receiver = 1;				// An   1: master, 2: brennercontrol
+			  byte sender = 2;					// Von  1: master, 2: brennercontrol
+			  byte command = 0;   				// 100: neue konfiguration
+			  byte dcVersion = 0;
+			  bool  transmit_each_burn = false;
+			  unsigned int t_meas_sensors = 20; 	// intervall in s  read all local sensors
+			  unsigned int t_publish_sensors = 20;	// intervall in s   provide data at Serial Interface
+			} ;
+			*/
 
 			// buf is a device configuration - copy buffer into data structure
-			memcpy(&dc, &buf, sizeof(dc));
-			db_px("dc.transmit_each_burn", 				dc.transmit_each_burn);
-			db_px("dc.measure_sensors_intervall_s", 	dc.t_meas_sensors);
-			db_px("dc.transmit_each_burn", 				dc.transmit_each_burn);
-			db_px("dc.update_sensor_data_intervall_s", 	dc.t_publish_sensors);
 
+			struct Rx_device_configuration_burner dc1;
+			memcpy(&dc1, &buf, sizeof(dc1));
+			dc.transmit_each_burn = 	dc1.transmit_each_burn;
+			dc.t_meas_sensors = 		dc1.t_meas_sensors;
+			dc.t_publish_sensors = 		dc1.t_publish_sensors;
+			dc.dcVersion = 				dc1.dcVersion;
+
+			db_px("dc.transmit_each_burn ", 				dc.transmit_each_burn);
+			db_px("dc.measure_sensors_intervall_s ", 	dc.t_meas_sensors);
+			db_px("dc.update_sensor_data_intervall_s ", 	dc.t_publish_sensors);
+			db_px("dc.dcVersion ", 	  					dc.dcVersion);
 		}
 		break;
 

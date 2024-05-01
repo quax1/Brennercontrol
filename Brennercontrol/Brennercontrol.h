@@ -25,6 +25,7 @@
 
 
 #include "helper.h"       // debug funktionen
+#include "Common_Declarations.h"
 #ifdef RADIO
 	#include <SPI.h>
 	#include "RF24.h"    //http://tmrh20.github.io/RF24/
@@ -79,6 +80,7 @@
 extern const byte  BrennerSensorPin;   //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
 extern const byte  BurnIndicatorLEDPin;
 extern const byte interruptPin;
+const byte PIN_LED_LIFECHK = 4; //  grün extern
 
 extern const byte ENABLE_PIN;
 extern const unsigned long BAUD_RATE;
@@ -146,12 +148,7 @@ extern int  lastday;
 //};
 
 
-
-
-
-
-// Datastructure for device configuration Burner Control
-struct device_configuration
+struct device_configuration_burner_struct
 {
   byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
   byte dcVersion = 0;
@@ -159,7 +156,8 @@ struct device_configuration
   unsigned int t_meas_sensors = 20; 	// intervall in s  read all local sensors
   unsigned int t_publish_sensors = 20;	// intervall in s   provide data at Serial Interface
 } ;
-extern struct device_configuration dc;
+
+extern struct device_configuration_burner_struct dc;   // Datastructure for device configuration Burner Control
 
 extern byte bad_transmit_count;
 extern byte T_fail_count;  // failed temperature meeasssurements
@@ -168,7 +166,7 @@ extern byte T_fail_count;  // failed temperature meeasssurements
 
 // global variables
 // char strBuffer20[20] = "blabla";
-extern bool firstloop;
+extern bool Firstrun;
 
 // unsigned int current_burntime = 0;   // current burntime in 0.1 s   123 = 12.3 sec
 
@@ -195,51 +193,6 @@ extern const byte addr_max_T10;
 
 // ****** Neu Brennercontrol    *********************************************
 
-struct Transmit_Sensors_Struct       // declaration
-{
-  byte receiver = 1;				// An   1: master, 2: brennercontrol
-  byte sender = 2;					// Von  1: master, 2: brennercontrol
-  byte command = 2;               	// 0:empty answer,  1: current sensor values, 2: day average
-  byte bad_transmit_count = 0;
-  byte transmitted_flag = 0;		// 0 not yet transmitted
-
-  int current_temperature = -900;
-  int vorlauf = -900;
-  int vorlauf_max = -900;        // falsch hier
-  int vorlauf_min = -900;
-  unsigned long gesamt_brenndauer = 0;
-};
-//extern struct Transmit_Sensors_Struct sensordata;
-
-struct DayAverageStruct
-{
-  byte receiver = 1;				//An    1: master, 2: brennercontrol
-  byte sender = 2;					//Von   1: master, 2: brennercontrol
-  byte command = 2;               	// 0:empty answer,  1: current sensor values, 2: day average
-  byte bad_transmit_count = 0;
-  byte transmitted_flag = 1;		// 0 not yet transmitted
-
-  byte temp_meas_count = 0;
-  int average_temp = -900;
-  int max_T10 = -32768 ;  //
-  int min_T10 =  32767;  //
-  unsigned long gesamt_brenndauer = 0;
-  unsigned int burn_day = 0;
-};
-// extern struct DayAverageStruct DayAverage;
-
-
-struct CurrentBurntimeStruct       // declaration
-{
-	byte receiver = 1;				//An    1: master, 2: brennercontrol
-	byte sender = 2;				//Von   1: master, 2: brennercontrol
-	byte command = 3;               // 0:empty answer,  1: current sensor values, 2: day average, 3: current burntime
-	byte bad_transmit_count = 0;
-	byte transmitted_flag = 1;		// 0 not yet transmitted
-
-	unsigned long gesamt_brenndauer = 0;
-	unsigned int current_burntime 	= 0;   // burntime in 0.1s units
-};
 //extern struct CurrentBurntimeStruct CurrentBurntime;
 
 
@@ -295,9 +248,9 @@ void loop();
 //#line 1 "/home/matthias/Arduino/00 Sketch/00 Brennerlogger/Brennerlog_6.0/Burner.ino"
 void check_burner();
 //void check_burner_isr_int0();
-void checkSerial();
-void measure_sensors(unsigned int interval_s);
-void update_sensor_data(unsigned int interval_s);
+void checkSerial_incoming_msg();
+void measure_sensors(unsigned int interval_s, bool Firstrun);
+void update_sensor_data(unsigned int interval_s, bool Firstrun);
 //void evaluate_joystick();
 //#line 111 "/home/matthias/Arduino/00 Sketch/00 Brennerlogger/Brennerlog_6.0/Burner.ino"
 //void update_display(unsigned long gesamt_brenndauer, int Temperature10 );

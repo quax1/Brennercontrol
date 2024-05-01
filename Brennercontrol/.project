@@ -39,7 +39,12 @@
 		<link>
 			<name>core/variant</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/arduino/hardware/avr/1.8.6/variants/mega</locationURI>
+			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/arduino/hardware/avr/1.8.6/variants/eightanaloginputs</locationURI>
+		</link>
+		<link>
+			<name>libraries/Common_Declarations</name>
+			<type>2</type>
+			<location>/home/matthias/Arduino/00 Sketch/libraries/Common_Declarations</location>
 		</link>
 		<link>
 			<name>libraries/DS1307RTC-master</name>
