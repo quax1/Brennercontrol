@@ -9,9 +9,9 @@
 
 void transmit_buf(void* vptr_buf, unsigned int bufsize){
 	delay (5);  // give the master a moment to prepare to receive
-	digitalWrite (ENABLE_PIN, HIGH);  // enable sending
+	digitalWrite (PIN_ENABLE_RS485, HIGH);  // enable sending
 	myChannel.sendMsg (vptr_buf, bufsize);
-	digitalWrite (ENABLE_PIN, LOW);  // disable sending
+	digitalWrite (PIN_ENABLE_RS485, LOW);  // disable sending
 }
 
 //void dump_Transmit_Sensors(struct Transmit_Sensors_Struct Transmit_Sensors){

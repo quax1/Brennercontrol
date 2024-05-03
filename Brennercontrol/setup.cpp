@@ -18,12 +18,14 @@ void setup()
   //attachInterrupt (digitalPinToInterrupt(interruptPin), check_burner_isr_int0, RISING);
 
   db_pln("startup rs485 slave");
-  softserial.begin(BAUD_RATE);  //  BAUD_RATE 28800
+  softserial.begin(9600);  //  BAUD_RATE 28800
   myChannel.begin();
 
-  pinMode (ENABLE_PIN, OUTPUT);  // driver output enable
-   digitalWrite (ENABLE_PIN, LOW);  // disable sending
+  pinMode (PIN_ENABLE_RS485, OUTPUT);  // driver output enable
+   digitalWrite (PIN_ENABLE_RS485, LOW);  // disable sending  PIN_ENABLE_RS485
    startup_pin(PIN_LED_LIFECHK);
+   startup_pin(PIN_LED_BurnIndicator);
+
 
   db_pln("*** Debug enabled");
 #ifndef DEBUG    //
@@ -63,8 +65,6 @@ Serial.println(F("*** Radio disabled"));
   //  sensors.setWaitForConversion(true);
 
 
-  //  initiaize ouput LED
-  pinMode(BurnIndicatorLEDPin, OUTPUT);
 
 
   //  initialize SD Card  ************************************
@@ -123,7 +123,7 @@ Serial.println(F("*** Radio disabled"));
   db_pln(average_temp);
 
   // initialize Brenner Sensor
-  pinMode(BrennerSensorPin, INPUT_PULLUP);
+  pinMode(PIN_BRENNER_RELAIS, INPUT_PULLUP);
   // falls Brenner läuft auf Brenner Ende warten
   digitalWrite(7, HIGH);
 
@@ -133,7 +133,7 @@ Serial.println(F("*** Radio disabled"));
   lcd.LCD_write_string(0, 0, "wait for burner idle", MENU_NORMAL );
 #endif
 
-  while (digitalRead(BrennerSensorPin) == LOW) {
+  while (digitalRead(PIN_BRENNER_RELAIS) == LOW) {
     Serial.println ("wait for burn stop");
   }
   digitalWrite(7, LOW);

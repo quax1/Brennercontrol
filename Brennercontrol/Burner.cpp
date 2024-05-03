@@ -66,14 +66,14 @@ void check_burner()
 //return;
 	// Check Burner State Change ****************************************************
 
-	BurnerState_idle = (digitalRead(BrennerSensorPin) == HIGH);      // LOW=false   Brenner hat eingeschaltet
+	BurnerState_idle = (digitalRead(PIN_BRENNER_RELAIS) == HIGH);      // LOW=false   Brenner hat eingeschaltet
 	// compare the BurnerState to its previous state
 
 	if (!(BurnerState_idle == lastBurnerState_idle)) {
 		// Serial.println("state change ");
 		if (! BurnerState_idle) {
 			// Brenner hat eingeschaltet
-			Serial.println("Brenner Ein"); digitalWrite(BurnIndicatorLEDPin, HIGH);
+			Serial.println("Brenner Ein"); digitalWrite(PIN_LED_BurnIndicator, HIGH);
 			// RTC.read(tm_on);
 			timenow = millis();
 			last_time_Burn_On = timenow;
@@ -81,7 +81,7 @@ void check_burner()
 
 		} else {
 			// Brenner hat ausgeschaltet
-			Serial.println("Brenner Aus"); digitalWrite(BurnIndicatorLEDPin, LOW);
+			Serial.println("Brenner Aus"); digitalWrite(PIN_LED_BurnIndicator, LOW);
 
 			timenow = millis();
 			unsigned long current_burntime = (timenow - last_time_Burn_On)   ;  // burntime in unit 0.1s

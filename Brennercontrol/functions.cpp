@@ -10,10 +10,10 @@ bool getTemp10_index(int &temperature1, byte index) {      //0 sensor 1,
   sensors.begin();
   sensors.setWaitForConversion(false);
   sensors.requestTemperatures();
-  pinMode(ONE_WIRE_BUS, OUTPUT);
+  pinMode(PIN_ONE_WIRE_BUS, OUTPUT);
 
   // Get Sensor
-  digitalWrite(ONE_WIRE_BUS, HIGH);
+  digitalWrite(PIN_ONE_WIRE_BUS, HIGH);
   delay(1000);
   int temperature10_tmp = round(sensors.getTempCByIndex(index) * 10);      //needs calibrated sensors originals no china shit
   db_px("\nindex: ", index);
@@ -88,12 +88,12 @@ void write_info() {
   // flash LED while writing
   Serial.println("write info");
 
-  digitalWrite(BurnIndicatorLEDPin, HIGH);
+  digitalWrite(PIN_LED_BurnIndicator, HIGH);
   for (int n = 1; n < 6; n++) {
     delay(100);  // blink to signal write process
-    digitalWrite(BurnIndicatorLEDPin, LOW);
+    digitalWrite(PIN_LED_BurnIndicator, LOW);
     delay(100);
-    digitalWrite(BurnIndicatorLEDPin, HIGH);
+    digitalWrite(PIN_LED_BurnIndicator, HIGH);
   }
 }  // end write_info
 

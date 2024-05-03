@@ -10,16 +10,17 @@
 // radio must be attached and powered otherwise "radio.available()" will stuck - even if failure handling is enabled
 
 // Constants and Pins
-const byte BrennerSensorPin = A0; //A3; // must be 2 if interupt is used   //A3; //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
+//const byte PIN_BRENNER_RELAIS = A0; //A3; // must be 2 if interupt is used   //A3; //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
 //const byte interruptPin = BrennerSensorPin;              //interrupt 0, pin D2    jetzt BrennerSensorPin
-const byte BurnIndicatorLEDPin = A1;//9;
+//const byte BurnIndicatorLEDPin = A1;//9;
 //
 
 // Soft Serial
-const byte ENABLE_PIN = 3;
-const unsigned long BAUD_RATE = 9600;  // 9600
+//const byte PIN_ENABLE_RS485 = 3;
+//const unsigned long BAUD_RATE = 9600;  // 9600
 const byte RECEIVE_BUFFER_SIZE = 50;  //
-SoftwareSerial softserial (10, 11);  // receive pin, transmit pin
+
+SoftwareSerial softserial (PIN_SOFTSERIAL_RX, PIN_SOFTSERIAL_RX);  // receive pin, transmit pin
 void fWrite (const byte what)
 {
 	softserial.write (what);
@@ -38,7 +39,7 @@ RS485 myChannel (fRead, fAvailable, fWrite, RECEIVE_BUFFER_SIZE);  //a maximum b
 //   ************    Initialize  *******************
 // Temperatur Sensor Dallas 18B20P
 // #define ONE_WIRE_BUS 8 //8 alternative 16
-OneWire oneWire(ONE_WIRE_BUS);
+OneWire oneWire(PIN_ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 

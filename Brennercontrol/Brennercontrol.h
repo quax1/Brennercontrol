@@ -53,7 +53,8 @@
 #endif
 
 // Temperatur Sensor Dallas 18B20P
-#define ONE_WIRE_BUS 8 //8 alternative 16
+//#define ONE_WIRE_BUS 8 //8 alternative 16
+
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -76,15 +77,23 @@
 //	extern volatile boolean BurnerState_idle;  // Brennerzustand initial aus - Relaiskontakt offen
 
 
-// Constants and Pins
-extern const byte  BrennerSensorPin;   //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
-extern const byte  BurnIndicatorLEDPin;
-extern const byte interruptPin;
-const byte PIN_LED_LIFECHK = 4; //  grün extern
+// **********   Constants and Pins
+const byte PIN_ONE_WIRE_BUS = 8;
+const byte PIN_BRENNER_RELAIS = A0;         //A3; // must be 2 if interupt is used   //A3; //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
+const byte PIN_ENABLE_RS485 = 3;
+const byte PIN_SOFTSERIAL_RX = 10; // receive pin,
+const byte PIN_SOFTSERIAL_TX = 11; // transmit pin
 
-extern const byte ENABLE_PIN;
-extern const unsigned long BAUD_RATE;
-extern const byte RECEIVE_BUFFER_SIZE; //
+const byte PIN_LED_LIFECHK = 4; //  grün extern
+const byte PIN_LED_BurnIndicator = A1;//9;
+
+
+
+//extern const byte PIN_ENABLE_RS485;
+//extern const byte  BurnIndicatorLEDPin;
+//extern const byte interruptPin;
+//extern const unsigned long BAUD_RATE;
+//extern const byte RECEIVE_BUFFER_SIZE; //
 extern SoftwareSerial softserial;  // receive pin, transmit pin
 extern RS485 myChannel;  //
 
