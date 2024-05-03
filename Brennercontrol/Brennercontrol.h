@@ -81,7 +81,7 @@
 const byte PIN_ONE_WIRE_BUS = 8;
 const byte PIN_BRENNER_RELAIS = A0;         //A3; // must be 2 if interupt is used   //A3; //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
 const byte PIN_ENABLE_RS485 = 3;
-const byte PIN_SOFTSERIAL_RX = 10; // receive pin,
+const byte PIN_SOFTSERIAL_RX =  10; // receive pin,
 const byte PIN_SOFTSERIAL_TX = 11; // transmit pin
 
 const byte PIN_LED_LIFECHK = 4; //  grün extern
