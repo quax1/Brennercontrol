@@ -20,7 +20,7 @@
 //const unsigned long BAUD_RATE = 9600;  // 9600
 const byte RECEIVE_BUFFER_SIZE = 50;  //
 
-SoftwareSerial softserial (PIN_SOFTSERIAL_RX, PIN_SOFTSERIAL_RX);  // receive pin, transmit pin
+SoftwareSerial softserial (PIN_SOFTSERIAL_RX, PIN_SOFTSERIAL_TX);  // receive pin, transmit pin
 void fWrite (const byte what)
 {
 	softserial.write (what);
