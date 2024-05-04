@@ -146,6 +146,7 @@ void loop()
 	Day_average_publish();  // ******************* its a new day - write average from yesterday
 
 	lifecheck_blink_LED(Firstrun);
+	LED_serial_received_timer(false);
 	if (Firstrun)  Firstrun = false;
 
 

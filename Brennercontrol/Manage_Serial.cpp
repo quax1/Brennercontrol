@@ -27,11 +27,29 @@ void transmit_buf(void* vptr_buf, unsigned int bufsize){
 //    db_px("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
 //}
 
+void LED_serial_received_timer(bool startLED = false){
+	// blinks if not stuck
+	static unsigned long timer_LED_serial_received =0 ;
+	static bool LED_on = 0 ;
+
+	if (startLED){
+		digitalWrite(PIN_LED_SERIAL_RECEIVED, HIGH);
+		timer_LED_serial_received = millis();
+		 LED_on = true ;
+		 startLED = false;
+	}
+	if (((millis() - timer_LED_serial_received) > 5000L) && LED_on) {
+		LED_on = false;
+		digitalWrite(PIN_LED_SERIAL_RECEIVED, LOW);
+	}
+}  //LED_serial_received_timer
+
 void checkSerial_incoming_msg(){
 
 	if (myChannel.update ())
 	{
 		Serial.println("incoming msg");
+		 LED_serial_received_timer(true);
 
 		unsigned int msg_size = myChannel.getLength ();
 		byte buf [msg_size];

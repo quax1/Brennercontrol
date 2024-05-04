@@ -10,7 +10,7 @@
 
 
 //add your includes for the project Brennercontrol here
-#define SKETCH_NAME       "Brennerlog-6.0"
+#define SKETCH_NAME       "Brennercontrol 2.0"
 //#define RADIO
 // #define SDCard
 #define DEBUG
@@ -81,12 +81,12 @@
 const byte PIN_ONE_WIRE_BUS = 8;
 const byte PIN_BRENNER_RELAIS = A0;         //A3; // must be 2 if interupt is used   //A3; //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
 const byte PIN_ENABLE_RS485 = 3;
-const byte PIN_SOFTSERIAL_RX =  10; // receive pin,
+const byte PIN_SOFTSERIAL_RX = 10; // receive pin,
 const byte PIN_SOFTSERIAL_TX = 11; // transmit pin
 
 const byte PIN_LED_LIFECHK = 4; //  grün extern
-const byte PIN_LED_BurnIndicator = A1;//9;
-
+const byte PIN_LED_BurnIndicator = A2;   //9;gelb
+const byte PIN_LED_SERIAL_RECEIVED = A1;   // blau
 
 
 //extern const byte PIN_ENABLE_RS485;
@@ -265,7 +265,7 @@ void update_sensor_data(unsigned int interval_s, bool Firstrun);
 //void update_display(unsigned long gesamt_brenndauer, int Temperature10 );
 //#line 187 "/home/matthias/Arduino/00 Sketch/00 Brennerlogger/Brennerlog_6.0/Brennerlog_6.0.ino"
 //
-
+void LED_serial_received_timer(bool startLED = false);
 
 //Do not add code below this line
 #endif /* _Brennercontrol_H_ */

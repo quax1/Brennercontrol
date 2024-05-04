@@ -25,7 +25,7 @@ void setup()
    digitalWrite (PIN_ENABLE_RS485, LOW);  // disable sending  PIN_ENABLE_RS485
    startup_pin(PIN_LED_LIFECHK);
    startup_pin(PIN_LED_BurnIndicator);
-
+   startup_pin(PIN_LED_SERIAL_RECEIVED);
 
   db_pln("*** Debug enabled");
 #ifndef DEBUG    //
@@ -125,7 +125,7 @@ Serial.println(F("*** Radio disabled"));
   // initialize Brenner Sensor
   pinMode(PIN_BRENNER_RELAIS, INPUT_PULLUP);
   // falls Brenner läuft auf Brenner Ende warten
-  digitalWrite(7, HIGH);
+  digitalWrite(PIN_LED_BurnIndicator, HIGH);
 
 
 
@@ -136,7 +136,7 @@ Serial.println(F("*** Radio disabled"));
   while (digitalRead(PIN_BRENNER_RELAIS) == LOW) {
     Serial.println ("wait for burn stop");
   }
-  digitalWrite(7, LOW);
+  digitalWrite(PIN_LED_BurnIndicator, LOW);
   Serial.println ("burn stopped");
 
   // Read current time for average temperature
