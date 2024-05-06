@@ -100,7 +100,7 @@ void checkSerial_incoming_msg(){
 
 			// send end message
 
-			struct EndMsg_Struct  EndMsg;
+			struct Termination_Msg_Struct  EndMsg;
 			EndMsg.receiver = 1; 		// An    1: master, 2: brennercontrol
 			EndMsg.sender 	= 2; 		// Von  1: master, 2: brennercontrol
 			EndMsg.command 	= 0;   		// 0:END message or no Data to send,  1: current sensor values, 2: day average
