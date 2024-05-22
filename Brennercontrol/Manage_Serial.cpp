@@ -85,14 +85,14 @@ void checkSerial_incoming_msg(){
 			}
 
 			if (result.CurrentBurntime.transmitted_flag == 0) {
-				db_pln("send CurrentBurntime");
+				db_pln("********* send CurrentBurntime");
 				result.CurrentBurntime.transmitted_flag = 101;
 				transmit_buf(&result.CurrentBurntime, sizeof(result.CurrentBurntime));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
 			}
 
 			if (result.DayAverage.transmitted_flag == 0) {
-				db_pln("send DayAverage");
+				db_pln("**********  send DayAverage ************");
 				result.DayAverage.transmitted_flag = 102;
 				transmit_buf(&result.DayAverage, sizeof(result.DayAverage));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
@@ -142,6 +142,19 @@ void checkSerial_incoming_msg(){
 			db_px("dc.measure_sensors_intervall_s ", 	dc.t_meas_sensors);
 			db_px("dc.update_sensor_data_intervall_s ", 	dc.t_publish_sensors);
 			db_px("dc.dcVersion ", 	  					dc.dcVersion);
+
+
+			// send end message
+			struct Termination_Msg_ConfigOK_Struct  EndMsg;
+			EndMsg.receiver = 1;        // An   1: master, 2: brennercontrol
+			EndMsg.sender = 2;          // Von  1: master, 2: brennercontrol
+			EndMsg.command = 100;                 // 0:empty answer,  1: current sensor values, 2: day average
+			EndMsg.version = dc.dcVersion;
+			EndMsg.unix_time = now();
+
+			db_pln("last msg - No Data");
+			transmit_buf(&EndMsg, sizeof(EndMsg));
+			delay(100); // Ausreichend um buffer im empfänger zu leeren wichtig !
 		}
 		break;
 

@@ -32,10 +32,10 @@ void Day_average_publish(){
 
 	// ******************* its a new day - write average from yesterday
 	if (tm.Day != lastday) {
-		db_pln("new day....");
+		db_pln("******* new day Provide Day Average ***********");
 
 		if (temp_meas_count > 44)  average_temp = (average_temp / temp_meas_count) ;      // should be 47 values
-		else average_temp = -900; // invalid value
+		else average_temp = -500-temp_meas_count; // invalid value
 
 		// Write_Logline_day(tm, average_temp, gesamt_brenndauer - gesamt_brenndauer_last_day, gesamt_brenndauer, temp_meas_count);
 
