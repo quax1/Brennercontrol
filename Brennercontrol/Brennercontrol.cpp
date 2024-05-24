@@ -122,7 +122,7 @@ void loop()
 		//	   db_px("date ", strBuffer20);
 		// time
 		sprintf(strBuffer20, "%02d:%02d:%02d " , tm.Hour, tm.Minute, tm.Second  );  //  07:58:26
-		//	  db_px("time ", strBuffer20);
+		db_px("time ", strBuffer20);
 	}  // *****  get time and update display
 
 

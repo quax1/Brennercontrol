@@ -150,9 +150,12 @@ void checkSerial_incoming_msg(){
 			EndMsg.sender = 2;          // Von  1: master, 2: brennercontrol
 			EndMsg.command = 100;                 // 0:empty answer,  1: current sensor values, 2: day average
 			EndMsg.version = dc.dcVersion;
-			EndMsg.unix_time = now();
 
-			db_pln("last msg - No Data");
+			unsigned long  t = now();
+			db_px("timet", t);
+			EndMsg.unix_time = t;
+
+			db_px("last msg CONFIG- No Data - unix time: ", EndMsg.unix_time);
 			transmit_buf(&EndMsg, sizeof(EndMsg));
 			delay(100); // Ausreichend um buffer im empfänger zu leeren wichtig !
 		}
