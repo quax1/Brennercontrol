@@ -139,13 +139,19 @@ Serial.println(F("*** Radio disabled"));
   digitalWrite(PIN_LED_BurnIndicator, LOW);
   Serial.println ("burn stopped");
 
+
+  setSyncProvider(RTC.get);   // the function to get the time from the RTC
+  if(timeStatus()!= timeSet)
+     Serial.println("Unable to sync with the RTC");
+  else
+     Serial.println("RTC has set the system time");
+
   // Read current time for average temperature
-  RTC.read(tm);
-
-
+  //RTC.read(tm);
 
   // initialize for day average
-  lastday = tm.Day;
+  lastday =  day(); // day();
+  db_px("lastday: ",lastday);
   // gesamt_brenndauer_last_day = gesamt_brenndauer;
 
   // initialize timer

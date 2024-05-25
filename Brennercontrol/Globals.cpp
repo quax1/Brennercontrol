@@ -52,7 +52,7 @@ bool lastBurnerState_idle = true;
 
 // Variables
 unsigned long gesamt_brenndauer = 0;
-tmElements_t tm;
+//tmElements_t tm;
 int Temperature10 = -900;    // -900 is invalid
 int Temperature10_vorlauf = -900;    // -900 is invalid
 int max_T10 = -32768;  // new

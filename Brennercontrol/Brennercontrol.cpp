@@ -31,7 +31,7 @@ void Day_average_publish(){
 
 
 	// ******************* its a new day - write average from yesterday
-	if (tm.Day != lastday) {
+	if (day() != lastday) {
 		db_pln("******* new day Provide Day Average ***********");
 
 		if (temp_meas_count > 44)  average_temp = (average_temp / temp_meas_count) ;      // should be 47 values
@@ -73,7 +73,7 @@ void Day_average_publish(){
 
 		// reset day counters
 		temp_meas_count = 0;
-		lastday = tm.Day;
+		lastday = day();
 		average_temp = 0;
 		max_T10 = -32768 ;  // new
 		min_T10 =  32767;  // new
@@ -113,16 +113,16 @@ void loop()
 	timenow = millis();
 	if (( ((timenow - last_time_display) > 3000L) || (Firstrun) )  && BurnerState_idle  ) {
 		last_time_display = timenow;
-		RTC.read(tm);
+		//RTC.read(tm);
 		//update_display( gesamt_brenndauer, Temperature10 ) ;
 
 		char strBuffer20[20] = "";
 		// date
-		sprintf(strBuffer20, "%02d.%02d.%04d " , tm.Day, tm.Month, tmYearToCalendar(tm.Year)  ); // Date  10.05.2020
-		//	   db_px("date ", strBuffer20);
+		sprintf(strBuffer20, "%02d.%02d.%04d " , day(), month(), year()  ); // Date  10.05.2020
+			   db_px("date ", strBuffer20);
 		// time
-		sprintf(strBuffer20, "%02d:%02d:%02d " , tm.Hour, tm.Minute, tm.Second  );  //  07:58:26
-		db_px("time ", strBuffer20);
+		sprintf(strBuffer20, "%02d:%02d:%02d " , hour(), minute(), second() );  //  07:58:26
+		db_px("  time ", strBuffer20);
 	}  // *****  get time and update display
 
 
