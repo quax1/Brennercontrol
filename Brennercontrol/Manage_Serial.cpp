@@ -16,15 +16,15 @@ void transmit_buf(void* vptr_buf, unsigned int bufsize){
 
 //void dump_Transmit_Sensors(struct Transmit_Sensors_Struct Transmit_Sensors){
 //    // print all
-//    db_px("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
-//    db_px("Transmit_Sensors.sender ", Transmit_Sensors.sender);
-//    db_px("Transmit_Sensors.command ", Transmit_Sensors.command);
-//    db_px("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
-//    db_px("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
-//    db_px("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
-//    db_px("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
-//    db_px("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
-//    db_px("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
+//    db_pxln("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
+//    db_pxln("Transmit_Sensors.sender ", Transmit_Sensors.sender);
+//    db_pxln("Transmit_Sensors.command ", Transmit_Sensors.command);
+//    db_pxln("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
+//    db_pxln("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
+//    db_pxln("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
+//    db_pxln("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
+//    db_pxln("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
+//    db_pxln("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
 //}
 
 void LED_serial_received_timer(bool startLED = false){
@@ -56,9 +56,9 @@ void checkSerial_incoming_msg(){
 		memset (&buf, 0, msg_size);
 		memcpy(buf, myChannel.getData (), msg_size );
 
-		db_px("receiver buf [0]: ", buf [0]);
-		db_px("sender   buf [1]: ", buf [1]);
-		db_px("command  buf [2]: ", buf [2]);
+		db_pxln("receiver buf [0]: ", buf [0]);
+		db_pxln("sender   buf [1]: ", buf [1]);
+		db_pxln("command  buf [2]: ", buf [2]);
 
 		byte receiver = buf [0];
 		byte sender   = buf [1];
@@ -138,10 +138,10 @@ void checkSerial_incoming_msg(){
 			dc.t_publish_sensors = 		dc1.t_publish_sensors;
 			dc.dcVersion = 				dc1.dcVersion;
 
-			db_px("dc.transmit_each_burn ", 				dc.transmit_each_burn);
-			db_px("dc.measure_sensors_intervall_s ", 	dc.t_meas_sensors);
-			db_px("dc.update_sensor_data_intervall_s ", 	dc.t_publish_sensors);
-			db_px("dc.dcVersion ", 	  					dc.dcVersion);
+			db_pxln("dc.transmit_each_burn ", 				dc.transmit_each_burn);
+			db_pxln("dc.measure_sensors_intervall_s ", 	dc.t_meas_sensors);
+			db_pxln("dc.update_sensor_data_intervall_s ", 	dc.t_publish_sensors);
+			db_pxln("dc.dcVersion ", 	  					dc.dcVersion);
 
 
 			// send end message
@@ -152,10 +152,10 @@ void checkSerial_incoming_msg(){
 			EndMsg.version = dc.dcVersion;
 
 			unsigned long  t = now();
-			db_px("timet", t);
+			db_pxln("timet", t);
 			EndMsg.unix_time = t;
 
-			db_px("last msg CONFIG- No Data - unix time: ", EndMsg.unix_time);
+			db_pxln("last msg CONFIG- No Data - unix time: ", EndMsg.unix_time);
 			transmit_buf(&EndMsg, sizeof(EndMsg));
 			delay(100); // Ausreichend um buffer im empfänger zu leeren wichtig !
 		}

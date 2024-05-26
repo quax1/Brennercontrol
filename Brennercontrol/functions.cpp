@@ -16,8 +16,8 @@ bool getTemp10_index(int &temperature1, byte index) {      //0 sensor 1,
   digitalWrite(PIN_ONE_WIRE_BUS, HIGH);
   delay(1000);
   int temperature10_tmp = round(sensors.getTempCByIndex(index) * 10);      //needs calibrated sensors originals no china shit
-  db_px("\nindex: ", index);
-  db_px("temperature10_tmp: ", temperature10_tmp);
+  db_pxln("\nindex: ", index);
+  db_pxln("temperature10_tmp: ", temperature10_tmp);
 
   if (temperature10_tmp > -400 && temperature10_tmp < 600) {
     temperature1 = temperature10_tmp;   // sometimes the temp. is -126.9 or +85 °C  sensor wrong

@@ -92,7 +92,7 @@ Serial.println(F("*** Radio disabled"));
 // const byte eeAddress = 0; 
 // gesamt_brenndauer = 111; EEPROM.put(eeAddress, gesamt_brenndauer);   // reset EEPROM
 //  EEPROM.get( eeAddress, gesamt_brenndauer );
-//  db_px("gesamt_brenndauer eeprom ", gesamt_brenndauer);
+//  db_pxln("gesamt_brenndauer eeprom ", gesamt_brenndauer);
 //
 // 
 //
@@ -115,10 +115,10 @@ Serial.println(F("*** Radio disabled"));
   EEPROM.get( addr_min_T10 ,  min_T10 );
   EEPROM.get( addr_max_T10 ,  max_T10 );
 
-  db_px("gesamt_brenndauer  ", gesamt_brenndauer);
-  db_px("addr_gesamt_brenndauer_last_day  ", addr_gesamt_brenndauer_last_day);
+  db_pxln("gesamt_brenndauer  ", gesamt_brenndauer);
+  db_pxln("addr_gesamt_brenndauer_last_day  ", addr_gesamt_brenndauer_last_day);
   
-  db_px("gesamt_brenndauer last daay  ", gesamt_brenndauer_last_day);
+  db_pxln("gesamt_brenndauer last daay  ", gesamt_brenndauer_last_day);
   db_pln(temp_meas_count);
   db_pln(average_temp);
 
@@ -151,7 +151,7 @@ Serial.println(F("*** Radio disabled"));
 
   // initialize for day average
   lastday =  day(); // day();
-  db_px("lastday: ",lastday);
+  db_pxln("lastday: ",lastday);
   // gesamt_brenndauer_last_day = gesamt_brenndauer;
 
   // initialize timer

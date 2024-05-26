@@ -161,7 +161,7 @@ void loop()
     //Serial.write (myChannel.getData (), myChannel.getLength ());
     // Serial.println ();
 
-    db_px("myChannel.getLength (): ", myChannel.getLength ());
+    db_pxln("myChannel.getLength (): ", myChannel.getLength ());
 
 
 
@@ -183,22 +183,22 @@ void loop()
     //Transmit_Sensors.sender = 55;
 
     //Serial.println("initial");
-    //    db_px("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
-    //    db_px("Transmit_Sensors.sender ", Transmit_Sensors.sender);
-    //    db_px("Transmit_Sensors.command ", Transmit_Sensors.command);
-    //    db_px("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
-    //    db_px("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
-    //    db_px("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
-    //    db_px("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
-    //    db_px("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
-    //    db_px("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
+    //    db_pxln("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
+    //    db_pxln("Transmit_Sensors.sender ", Transmit_Sensors.sender);
+    //    db_pxln("Transmit_Sensors.command ", Transmit_Sensors.command);
+    //    db_pxln("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
+    //    db_pxln("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
+    //    db_pxln("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
+    //    db_pxln("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
+    //    db_pxln("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
+    //    db_pxln("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
 
     byte buf [100];
     memcpy(buf, myChannel.getData (), myChannel.getLength ());
-    db_px("buf [0]: ", buf [0]);
-    db_px("buf [1]: ", buf [1]);
-    db_px("buf [2]: ", buf [2]);
-    db_px("buf [3]: ", buf [3]);
+    db_pxln("buf [0]: ", buf [0]);
+    db_pxln("buf [1]: ", buf [1]);
+    db_pxln("buf [2]: ", buf [2]);
+    db_pxln("buf [3]: ", buf [3]);
 
     // Struct wiederherstellen
     // void* vptr_Transmit_Sensors = &Transmit_Sensors;
@@ -207,19 +207,19 @@ void loop()
     //    void *buf_P = &buf;    // zeiger auf Buffer
     //    struct Transmit_Sensors_Struct *Transmit_Sensors_P = NULL;  // zeiger vom typ Transmit_Sensors_Struct auf Transmit_Sensors
     //    Transmit_Sensors_P = buf_P;   // der Sensor Zeiger zeigt auf den buffer
-    //    db_px("command: ", (*Transmit_Sensors_P).command );   // geht auch
+    //    db_pxln("command: ", (*Transmit_Sensors_P).command );   // geht auch
     //    memcpy(&Transmit_Sensors, Transmit_Sensors_P, sizeof(Transmit_Sensors_Struct));
     //
     //    // print all
-    //    db_px("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
-    //    db_px("Transmit_Sensors.sender ", Transmit_Sensors.sender);
-    //    db_px("Transmit_Sensors.command ", Transmit_Sensors.command);
-    //    db_px("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
-    //    db_px("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
-    //    db_px("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
-    //    db_px("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
-    //    db_px("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
-    //    db_px("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
+    //    db_pxln("Transmit_Sensors.receiver ", Transmit_Sensors.receiver);
+    //    db_pxln("Transmit_Sensors.sender ", Transmit_Sensors.sender);
+    //    db_pxln("Transmit_Sensors.command ", Transmit_Sensors.command);
+    //    db_pxln("Transmit_Sensors.bad_transmit_count ", Transmit_Sensors.bad_transmit_count);
+    //    db_pxln("Transmit_Sensors.transmitted_flag ", Transmit_Sensors.transmitted_flag);
+    //    db_pxln("Transmit_Sensors.current_temperature ", Transmit_Sensors.current_temperature);
+    //    db_pxln("Transmit_Sensors.vorlauf ", Transmit_Sensors.vorlauf);
+    //    db_pxln("Transmit_Sensors.vorlauf_max ", Transmit_Sensors.vorlauf_max);
+    //    db_pxln("Transmit_Sensors.vorlauf_min ", Transmit_Sensors.vorlauf_min);
 
   }
 
@@ -228,13 +228,13 @@ void loop()
 
 
   //byte received = recvMsg (fAvailable, fRead, buf, sizeof buf);
-  // db_px("received flag: ",received);
+  // db_pxln("received flag: ",received);
   //  if (false) {
   //    Serial.println("received message!");           // Show on Serial Monitor
   //    Serial.write(byteReceived);
-  //    db_px("buf [0]: ", buf [0]);
-  //    db_px("buf [1]: ", buf [1]);
-  //    db_px("buf [2]: ", buf [2]);
+  //    db_pxln("buf [0]: ", buf [0]);
+  //    db_pxln("buf [1]: ", buf [1]);
+  //    db_pxln("buf [2]: ", buf [2]);
   //  }
   //
 

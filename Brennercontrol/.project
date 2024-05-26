@@ -87,9 +87,9 @@
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/arduino/hardware/avr/1.8.6/libraries/Wire</locationURI>
 		</link>
 		<link>
-			<name>libraries/helper</name>
+			<name>libraries/helper2</name>
 			<type>2</type>
-			<location>/home/matthias/Arduino/00 Sketch/libraries/helper</location>
+			<location>/home/matthias/Arduino/00 Sketch/libraries/helper2</location>
 		</link>
 	</linkedResources>
 </projectDescription>

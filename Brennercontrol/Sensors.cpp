@@ -41,15 +41,15 @@ void update_sensor_data(unsigned int interval_s, bool Firstrun){
 	    min_T10_vorlauf =  32767;
 
 		//dumpddata
-		db_px("sensordata.receiver ", result.sensordata.receiver);
-		db_px("sensordata.sender ", result.sensordata.sender);
-		db_px("sensordata.command ", result.sensordata.command);
-		//db_px("sensordata.bad_transmit_count ", result.sensordata.bad_transmit_count);
-		db_px("sensordata.transmitted_flag ", result.sensordata.transmitted_flag);
-		db_px("sensordata.current_temperature ", result.sensordata.current_temperature);
-		db_px("sensordata.vorlauf ", result.sensordata.vorlauf);
-		//db_px("sensordata.vorlauf_max ", result.sensordata.vorlauf_max);
-		//db_px("sensordata.vorlauf_min ", result.sensordata.vorlauf_min);
+		db_pxln("sensordata.receiver ", result.sensordata.receiver);
+		db_pxln("sensordata.sender ", result.sensordata.sender);
+		db_pxln("sensordata.command ", result.sensordata.command);
+		//db_pxln("sensordata.bad_transmit_count ", result.sensordata.bad_transmit_count);
+		db_pxln("sensordata.transmitted_flag ", result.sensordata.transmitted_flag);
+		db_pxln("sensordata.current_temperature ", result.sensordata.current_temperature);
+		db_pxln("sensordata.vorlauf ", result.sensordata.vorlauf);
+		//db_pxln("sensordata.vorlauf_max ", result.sensordata.vorlauf_max);
+		//db_pxln("sensordata.vorlauf_min ", result.sensordata.vorlauf_min);
 
 
 	}
@@ -74,7 +74,7 @@ void measure_sensors(unsigned int interval_s, bool Firstrun){
 			//  store max and min temperature value
 			if (Temperature10 > max_T10) max_T10 = Temperature10;
 			if (Temperature10 < min_T10) min_T10 = Temperature10;
-			db_px("T aussen: ", Temperature10);
+			db_pxln("T aussen: ", Temperature10);
 		}
 		else T_fail_count++;
 		if (T_fail_count > 7 ) { Temperature10 = -900; T_fail_count = 0; }                        // die letzten Messungen waren alle schlecht, keine werte für das berechnen des durchschnitts
@@ -88,9 +88,9 @@ void measure_sensors(unsigned int interval_s, bool Firstrun){
 			if (Temperature10_vorlauf > max_T10_vorlauf) max_T10_vorlauf = Temperature10_vorlauf;
 			if (Temperature10_vorlauf < min_T10_vorlauf) min_T10_vorlauf = Temperature10_vorlauf;
 
-			db_px("T Vorlauf act: ", Temperature10_vorlauf);
-			db_px("T Vorlauf max ", max_T10_vorlauf);
-			db_px("T Vorlauf min ", min_T10_vorlauf);
+			db_pxln("T Vorlauf act: ", Temperature10_vorlauf);
+			db_pxln("T Vorlauf max ", max_T10_vorlauf);
+			db_pxln("T Vorlauf min ", min_T10_vorlauf);
 		}
 
 //		// assemble message
@@ -101,8 +101,8 @@ void measure_sensors(unsigned int interval_s, bool Firstrun){
 //				4    // turn light on
 //		};
 //		db_p("Start sending");
-//		db_px("sizeof(msg): ", sizeof(msg));
-//		db_px("ENABLE_PIN): ", ENABLE_PIN);
+//		db_pxln("sizeof(msg): ", sizeof(msg));
+//		db_pxln("ENABLE_PIN): ", ENABLE_PIN);
 //		digitalWrite (ENABLE_PIN, HIGH);  // enable sending
 //		delay(1000);
 //		myChannel.sendMsg (msg, sizeof (msg));

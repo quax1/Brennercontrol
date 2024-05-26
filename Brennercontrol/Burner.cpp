@@ -36,8 +36,8 @@
 //	    Serial.print ("Bun completed: ms: ");
 //
 //	    Serial.println (endTime - startTime);
-//	    db_px("startTime ", startTime);
-//	    db_px("endTime ", endTime);
+//	    db_pxln("startTime ", startTime);
+//	    db_pxln("endTime ", endTime);
 //
 //	    unsigned long current_burntime = (endTime - startTime) ;
 //	    endTime = 0;
