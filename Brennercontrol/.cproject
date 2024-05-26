@@ -28,7 +28,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/DallasTemperature}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/OneWire}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/SoftwareSerial/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/helper}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/TimeLib}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/Common_Declarations}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/helper2}&quot;"/>
@@ -46,7 +45,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/DallasTemperature}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/OneWire}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/SoftwareSerial/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/helper}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/TimeLib}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/Common_Declarations}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/helper2}&quot;"/>
@@ -64,7 +62,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/DallasTemperature}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/OneWire}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/SoftwareSerial/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/helper}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/TimeLib}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/Common_Declarations}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Brennercontrol/libraries/helper2}&quot;"/>

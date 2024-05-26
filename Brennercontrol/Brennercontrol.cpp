@@ -119,10 +119,19 @@ void loop()
 		char strBuffer20[20] = "";
 		// date
 		sprintf(strBuffer20, "%02d.%02d.%04d " , day(), month(), year()  ); // Date  10.05.2020
-			   db_pxln("date ", strBuffer20);
+		db_px("date ", strBuffer20);
 		// time
 		sprintf(strBuffer20, "%02d:%02d:%02d " , hour(), minute(), second() );  //  07:58:26
-		db_pxln("  time ", strBuffer20);
+		db_px("  ", strBuffer20);
+		db_px("  day ", day());
+		db_pxln("  lastday ", lastday);
+
+		if (day() != lastday)
+			db_pln("******* new day ***********");
+
+
+
+
 	}  // *****  get time and update display
 
 
