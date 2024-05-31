@@ -88,6 +88,9 @@ const byte PIN_LED_LIFECHK = 4; //  grün extern
 const byte PIN_LED_BurnIndicator = A2;   //9;gelb
 const byte PIN_LED_SERIAL_RECEIVED = A1;   // blau
 
+// RTC:  SDA/Analog pin A4
+// RTC: SCL pin A5
+
 
 //extern const byte PIN_ENABLE_RS485;
 //extern const byte  BurnIndicatorLEDPin;

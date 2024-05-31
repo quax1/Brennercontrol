@@ -78,14 +78,14 @@ void checkSerial_incoming_msg(){
 			// transmitted_flag:  100 sensor data, 101 CurrentBurntime, 102  DayAverage, 250  end message
 
 			if (result.sensordata.transmitted_flag == 0) {    //not yet transmitted
-				db_pln("send sensor data");
+				db_pln("*** send sensor data");
 				result.sensordata.transmitted_flag = 100;  // steht im command byte !
 				transmit_buf(&result.sensordata, sizeof(result.sensordata));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
 			}
 
 			if (result.CurrentBurntime.transmitted_flag == 0) {
-				db_pln("********* send CurrentBurntime");
+				db_pln("*** send CurrentBurntime");
 				result.CurrentBurntime.transmitted_flag = 101;
 				transmit_buf(&result.CurrentBurntime, sizeof(result.CurrentBurntime));
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
@@ -154,8 +154,14 @@ void checkSerial_incoming_msg(){
 			unsigned long  t = now();
 			db_pxln("timet", t);
 			EndMsg.unix_time = t;
-
+			char strBuffer20[20] = "";
 			db_pxln("last msg CONFIG- No Data - unix time: ", EndMsg.unix_time);
+			sprintf(strBuffer20, "%02d.%02d.%04d " , day(), month(), year()  ); // Date  10.05.2020
+			db_px("date ", strBuffer20);
+			// time
+			sprintf(strBuffer20, "%02d:%02d:%02d " , hour(), minute(), second() );  //  07:58:26
+			db_px("  ", strBuffer20);
+
 			transmit_buf(&EndMsg, sizeof(EndMsg));
 			delay(100); // Ausreichend um buffer im empfänger zu leeren wichtig !
 		}
