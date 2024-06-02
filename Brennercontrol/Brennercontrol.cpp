@@ -117,12 +117,11 @@ void loop()
 		//update_display( gesamt_brenndauer, Temperature10 ) ;
 
 		char strBuffer20[20] = "";
-		// date
 		sprintf(strBuffer20, "%02d.%02d.%04d " , day(), month(), year()  ); // Date  10.05.2020
 		db_px("date ", strBuffer20);
-		// time
 		sprintf(strBuffer20, "%02d:%02d:%02d " , hour(), minute(), second() );  //  07:58:26
 		db_px("  ", strBuffer20);
+
 		db_px("  day ", day());
 		db_pxln("  lastday ", lastday);
 
