@@ -27,6 +27,12 @@ void setup()
    startup_pin(PIN_LED_BurnIndicator);
    startup_pin(PIN_LED_SERIAL_RECEIVED);
 
+
+	Serial.println("\n\n**** Starting Local Sensors ***");
+	dht1.begin(); // DHT Sensor
+//	dht2.begin(); // DHT Sensor
+//	dht3.begin(); // DHT Sensor
+
   db_pln("*** Debug enabled");
 #ifndef DEBUG    //
   Serial.println(F("*** Debug disabled"));

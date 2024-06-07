@@ -5,7 +5,7 @@
 
 
 
-bool getTemp10_index(int &temperature1, byte index) {      //0 sensor 1,
+bool getTemp10_index(int &temperature1, byte index, const DallasTemperature sensors) {      //0 sensor 1,
   bool ReadOK = true;
   sensors.begin();
   sensors.setWaitForConversion(false);

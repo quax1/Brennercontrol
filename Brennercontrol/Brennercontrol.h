@@ -58,6 +58,8 @@
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include "DHT.h"
+
 
 // EEPROM
 #include <EEPROM.h>
@@ -78,18 +80,26 @@
 
 
 // **********   Constants and Pins
-const byte PIN_ONE_WIRE_BUS = 8;
-const byte PIN_BRENNER_RELAIS = A0;         //A3; // must be 2 if interupt is used   //A3; //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
-const byte PIN_ENABLE_RS485 = 3;
-const byte PIN_SOFTSERIAL_RX = 10; // receive pin,
-const byte PIN_SOFTSERIAL_TX = 11; // transmit pin
 
-const byte PIN_LED_LIFECHK = 4; //  grün extern
-const byte PIN_LED_BurnIndicator = A2;   //9;gelb
-const byte PIN_LED_SERIAL_RECEIVED = A1;   // blau
+const byte PIN_ENABLE_RS485 	= 3;
+const byte PIN_LED_LIFECHK 		= 4; //  grün extern
 
-// RTC:  SDA/Analog pin A4
-// RTC: SCL pin A5
+
+#define DHTPIN1 5
+//#define DHTPIN2 6
+//#define DHTPIN3 7
+
+const byte PIN_ONE_WIRE_BUS 	= 8;   // for Dallas
+const byte PIN_ONE_WIRE_BUS2 	= 9;   // for Dallas2
+
+const byte PIN_SOFTSERIAL_RX	= 10; // receive pin,
+const byte PIN_SOFTSERIAL_TX 	= 11; // transmit pin
+
+const byte PIN_BRENNER_RELAIS 		= A0;         //A3; // must be 2 if interupt is used   //A3; //17 = analog 3   Pin wird auf Low gezogen wenn Brenner angeht und das Relais schliesst
+const byte PIN_LED_SERIAL_RECEIVED 	= A1;   // blau
+const byte PIN_LED_BurnIndicator 	= A2;   //9;gelb
+// RTC:  SDA/Analog pin 			= A4
+// RTC: SCL pin 					= A5
 
 
 //extern const byte PIN_ENABLE_RS485;
@@ -100,7 +110,9 @@ const byte PIN_LED_SERIAL_RECEIVED = A1;   // blau
 extern SoftwareSerial softserial;  // receive pin, transmit pin
 extern RS485 myChannel;  //
 
-
+extern DHT dht1;
+//DHT dht2
+//DHT dht3
 
 extern bool BurnerState_idle;         // Brennerzustand initial aus - Relaiskontakt offen
 extern bool lastBurnerState_idle;
@@ -127,7 +139,8 @@ extern int average_temp;
 extern OneWire oneWire;
 extern DallasTemperature sensors;
 
-
+extern OneWire oneWire2;
+extern DallasTemperature sensors2;
 //byte lasthour = 0;  // remembers last hour
 
 
@@ -216,7 +229,7 @@ struct all_result_data_objects
 };
 extern struct all_result_data_objects result;
 
-bool getTemp10_index(int &temperature1, byte index);
+bool getTemp10_index(int &temperature1, byte index, const DallasTemperature sensors);
 void check_serial();
 
 // ****** ENDE  Neu Brennercontrol    *********************************************

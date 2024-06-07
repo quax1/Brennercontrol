@@ -44,7 +44,13 @@ RS485 myChannel (fRead, fAvailable, fWrite, RECEIVE_BUFFER_SIZE);  //a maximum b
 OneWire oneWire(PIN_ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
+OneWire oneWire2(PIN_ONE_WIRE_BUS2);
+DallasTemperature sensors2(&oneWire2);
 
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
+  DHT dht1(DHTPIN1, DHTTYPE);
+//DHT dht2(DHTPIN2, DHTTYPE);
+//DHT dht3(DHTPIN3, DHTTYPE);
 
 
 bool BurnerState_idle = true; // Brennerzustand initial aus - Relaiskontakt offen sieh burner.cpp

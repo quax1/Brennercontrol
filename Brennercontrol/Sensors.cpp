@@ -68,7 +68,7 @@ void measure_sensors(unsigned int interval_s, bool Firstrun){
 		//bool getTemp10_index(int &temperature1, byte index) {      //0, 1,
 
 		// Aussen
-		if ( getTemp10_index(Temperature10, 0) )    // meas. is valid
+		if ( getTemp10_index(Temperature10, 0, sensors) )    // meas. is valid
 		{
 			T_fail_count = 0;
 			//  store max and min temperature value
@@ -81,7 +81,8 @@ void measure_sensors(unsigned int interval_s, bool Firstrun){
 
 
 		// Vorlauf
-		if ( getTemp10_index(Temperature10_vorlauf, 1) )    // meas. is valid
+	//	if ( getTemp10_index(Temperature10_vorlauf, 1, sensors2) )    // meas. is valid  @mn
+		if ( getTemp10_index(Temperature10_vorlauf, 1, sensors) )    // meas. is valid
 		{
 			T_fail_count = 0;
 			//  store max and min temperature of Vorlauf
