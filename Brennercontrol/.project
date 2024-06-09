@@ -72,6 +72,11 @@
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/arduino/hardware/avr/1.8.6/libraries/EEPROM</locationURI>
 		</link>
 		<link>
+			<name>libraries/Hausprojekt</name>
+			<type>2</type>
+			<location>/home/matthias/Arduino/00 Sketch/libraries/Hausprojekt</location>
+		</link>
+		<link>
 			<name>libraries/OneWire</name>
 			<type>2</type>
 			<location>/home/matthias/Arduino/00 Sketch/libraries/OneWire</location>

@@ -26,6 +26,8 @@
 
 #include "helper2.h"       // debug funktionen
 #include "Common_Declarations.h"
+#include "Hausprojekt.h"
+
 #ifdef RADIO
 	#include <SPI.h>
 	#include "RF24.h"    //http://tmrh20.github.io/RF24/
@@ -58,7 +60,7 @@
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#include "DHT.h"
+//#include "DHT.h"
 
 
 // EEPROM
@@ -83,11 +85,9 @@
 
 const byte PIN_ENABLE_RS485 	= 3;
 const byte PIN_LED_LIFECHK 		= 4; //  grün extern
+const byte PIN_DHT1 		    = 5; //
+//const byte PIN_DHT2 		    = 6; //
 
-
-#define DHTPIN1 5
-//#define DHTPIN2 6
-//#define DHTPIN3 7
 
 const byte PIN_ONE_WIRE_BUS 	= 8;   // for Dallas
 const byte PIN_ONE_WIRE_BUS2 	= 9;   // for Dallas2
@@ -110,9 +110,7 @@ const byte PIN_LED_BurnIndicator 	= A2;   //9;gelb
 extern SoftwareSerial softserial;  // receive pin, transmit pin
 extern RS485 myChannel;  //
 
-extern DHT dht1;
-//DHT dht2
-//DHT dht3
+
 
 extern bool BurnerState_idle;         // Brennerzustand initial aus - Relaiskontakt offen
 extern bool lastBurnerState_idle;
@@ -173,13 +171,24 @@ extern int  lastday;
 //};
 
 
+// internal device state is global but not saved to eeprom
+struct device_state {     // definition of type
+  // local sensors
+  int DHT1_humidity = 0;         //DHT Wohnzimmer
+  int DHT1_T10 = 0;
+  unsigned int succ_count = 0;
+  byte sensor_id = 0;
+};
+extern struct device_state ds;    // declaration in header file = available everywhere
+
+
 struct device_configuration_burner_struct
 {
   byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
   byte dcVersion = 0;
   bool  transmit_each_burn = false;
-  unsigned int t_meas_sensors = 20; 	// intervall in s  read all local sensors
-  unsigned int t_publish_sensors = 20;	// intervall in s   provide data at Serial Interface
+  unsigned int t_meas_sensors = 100; 	// intervall in s  read all local sensors
+  unsigned int t_publish_sensors = 300;	// intervall in s   provide data at Serial Interface
 } ;
 
 extern struct device_configuration_burner_struct dc;   // Datastructure for device configuration Burner Control

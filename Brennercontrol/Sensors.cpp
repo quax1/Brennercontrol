@@ -7,6 +7,10 @@
 
 #include "Brennercontrol.h"
 
+
+DHT_Sensors DHT1(PIN_DHT1, 1);
+
+
 void update_sensor_data(unsigned int interval_s, bool Firstrun){
 	timenow = millis();
 	static unsigned long last_time_this = timenow;
@@ -35,6 +39,9 @@ void update_sensor_data(unsigned int interval_s, bool Firstrun){
 		result.sensordata.vorlauf = Temperature10_vorlauf;
 		//result.sensordata.vorlauf_max	= max_T10_vorlauf;
 		//result.sensordata.vorlauf_min = min_T10_vorlauf;
+
+		result.sensordata.DHT1_T10  = ds.DHT1_T10;
+		result.sensordata.DHT1_humidity = ds.DHT1_humidity;
 
 	    // reset  counters
 	    max_T10_vorlauf = -32768 ;
@@ -93,28 +100,12 @@ void measure_sensors(unsigned int interval_s, bool Firstrun){
 			db_pxln("T Vorlauf max ", max_T10_vorlauf);
 			db_pxln("T Vorlauf min ", min_T10_vorlauf);
 		}
-
-//		// assemble message
-//		byte msg [] = {
-//				1,    // device 1
-//				2,    // turn light on
-//				3,    // turn light on
-//				4    // turn light on
-//		};
-//		db_p("Start sending");
-//		db_pxln("sizeof(msg): ", sizeof(msg));
-//		db_pxln("ENABLE_PIN): ", ENABLE_PIN);
-//		digitalWrite (ENABLE_PIN, HIGH);  // enable sending
-//		delay(1000);
-//		myChannel.sendMsg (msg, sizeof (msg));
-//		delay(1000);                                        // Wait before going back to Receive mode
-//		digitalWrite (ENABLE_PIN, LOW);
-
+		DHT1.read_DHT_values(ds.DHT1_T10, ds.DHT1_humidity);
+		ds.succ_count = DHT1.successCountx;
+		ds.sensor_id = DHT1.dev_nr;
 	}
 
 
 
 } // measure_sensors
-
-
 

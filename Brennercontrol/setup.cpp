@@ -29,9 +29,7 @@ void setup()
 
 
 	Serial.println("\n\n**** Starting Local Sensors ***");
-	dht1.begin(); // DHT Sensor
-//	dht2.begin(); // DHT Sensor
-//	dht3.begin(); // DHT Sensor
+
 
   db_pln("*** Debug enabled");
 #ifndef DEBUG    //

@@ -47,10 +47,7 @@ DallasTemperature sensors(&oneWire);
 OneWire oneWire2(PIN_ONE_WIRE_BUS2);
 DallasTemperature sensors2(&oneWire2);
 
-#define DHTTYPE DHT22   // DHT 22  (AM2302)
-  DHT dht1(DHTPIN1, DHTTYPE);
-//DHT dht2(DHTPIN2, DHTTYPE);
-//DHT dht3(DHTPIN3, DHTTYPE);
+
 
 
 bool BurnerState_idle = true; // Brennerzustand initial aus - Relaiskontakt offen sieh burner.cpp
@@ -120,6 +117,7 @@ int average_temp = 0;
 
 
 // struct CurrentBurntimeStruct CurrentBurntime;
+struct device_state ds;
 struct all_result_data_objects result;
 
 
