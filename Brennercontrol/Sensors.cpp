@@ -40,9 +40,10 @@ void update_sensor_data(unsigned int interval_s, bool Firstrun){
 		//result.sensordata.vorlauf_max	= max_T10_vorlauf;
 		//result.sensordata.vorlauf_min = min_T10_vorlauf;
 
-		result.sensordata.DHT1_T10  = ds.DHT1_T10;
+		result.sensordata.DHT1_T10  	= ds.DHT1_T10;
 		result.sensordata.DHT1_humidity = ds.DHT1_humidity;
-
+		result.sensordata.succ_count 	= ds.succ_count;
+		result.sensordata.sensor_id 	= ds.sensor_id;
 	    // reset  counters
 	    max_T10_vorlauf = -32768 ;
 	    min_T10_vorlauf =  32767;
@@ -100,7 +101,10 @@ void measure_sensors(unsigned int interval_s, bool Firstrun){
 			db_pxln("T Vorlauf max ", max_T10_vorlauf);
 			db_pxln("T Vorlauf min ", min_T10_vorlauf);
 		}
-		DHT1.read_DHT_values(ds.DHT1_T10, ds.DHT1_humidity);
+		int t; int h;
+	 DHT1.read_DHT_valuesx(ds.DHT1_T10, ds.DHT1_humidity);
+	// 	DHT1.read_DHT_valuesx(t, h);
+	//		DHT1.read_DHT_simple(t, h);
 		ds.succ_count = DHT1.successCountx;
 		ds.sensor_id = DHT1.dev_nr;
 	}

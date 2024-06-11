@@ -142,6 +142,7 @@ void loop()
 	//
 
 	checkSerial_incoming_msg();
+//	dc.t_meas_sensors = 10;
 
 	measure_sensors(dc.t_meas_sensors, Firstrun);    // intervall in s  read all local sensors
 
