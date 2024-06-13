@@ -124,7 +124,7 @@ extern int max_T10;  // new
 extern int min_T10;  // new
 extern int max_T10_vorlauf;  // new  Vorlauf
 extern int min_T10_vorlauf;  // new  Vorlauf
-extern byte temp_meas_count;
+extern int temp_meas_count;
 extern int average_temp;
 // bool send_current_T = 0;    // send once the current Temperature reading
 
@@ -182,14 +182,14 @@ struct device_state {     // definition of type
 extern struct device_state ds;    // declaration in header file = available everywhere
 
 
-struct device_configuration_burner_struct
-{
-  byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
-  byte dcVersion = 0;
-  bool  transmit_each_burn = false;
-  unsigned int t_meas_sensors = 100; 	// intervall in s  read all local sensors
-  unsigned int t_publish_sensors = 300;	// intervall in s   provide data at Serial Interface
-} ;
+//struct device_configuration_burner_struct
+//{
+//  byte command = 0;   // 0: neue konfiguration   1: transmit current temperature
+//  byte dcVersion = 0;
+//  bool  transmit_each_burn = false;
+//  unsigned int t_meas_sensors = 100; 	// intervall in s  read all local sensors
+//  unsigned int t_publish_sensors = 300;	// intervall in s   provide data at Serial Interface
+//} ;
 
 extern struct device_configuration_burner_struct dc;   // Datastructure for device configuration Burner Control
 

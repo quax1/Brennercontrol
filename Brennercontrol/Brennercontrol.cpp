@@ -7,7 +7,7 @@ void Day_average_sampling(bool Firstrun) {
 			// *****   make a measurement every 30 min for average day temperature
 
 	timenow = millis();
-	if (( ((timenow - last_time_average_Temp) > 30L * 60L * 1000L) || (Firstrun) )  && BurnerState_idle  ) {
+	if (( ((timenow - last_time_average_Temp) > (long)dc.mean_T_sample_intervall_s  * 1000L) || (Firstrun) )  && BurnerState_idle  ) {
 		last_time_average_Temp = timenow;
 		db_p("*average"); db_m;
 
@@ -34,29 +34,12 @@ void Day_average_publish(){
 	if (day() != lastday) {
 		db_pln("******* new day Provide Day Average ***********");
 
-		if (temp_meas_count > 44)  average_temp = (average_temp / temp_meas_count) ;      // should be 47 values
-		else average_temp = -500-temp_meas_count; // invalid value
+		 int genug = (90 * 24*60*60) / (dc.mean_T_sample_intervall_s *100);   //90% valid values
+
+		if (temp_meas_count > genug)  average_temp = (average_temp / temp_meas_count) ;      // should be 47 values
+		else average_temp = -1000-temp_meas_count; // invalid value
 
 		// Write_Logline_day(tm, average_temp, gesamt_brenndauer - gesamt_brenndauer_last_day, gesamt_brenndauer, temp_meas_count);
-
-
-		// Datastructure for transmission
-
-		//    struct DayAverageStruct
-		//    {
-		//      byte receiver = 1;				//An    1: master, 2: brennercontrol
-		//      byte sender = 2;					//Von   1: master, 2: brennercontrol
-		//      byte command = 2;               	// 0:empty answer,  1: current sensor values, 2: day average
-		//      byte bad_transmit_count = 0;
-		//      byte transmitted_flag = 0;		// 0 not yet transmitted
-		//      byte temp_meas_count = 0;
-		//      int average_temp = -900;
-		//      int max_T10 = -32768 ;  //
-		//      int min_T10 =  32767;  //
-		//      unsigned long gesamt_brenndauer = 0;
-		//      unsigned int burn_day = 0;
-		//    };
-		//	struct DayAverageStruct DayAverage;
 
 
 		result.DayAverage.transmitted_flag = 0;
@@ -67,8 +50,6 @@ void Day_average_publish(){
 		result.DayAverage.min_T10 = min_T10;  // new
 		result.DayAverage.gesamt_brenndauer = gesamt_brenndauer;     //new
 		result.DayAverage.burn_day = gesamt_brenndauer - gesamt_brenndauer_last_day;
-
-
 
 
 		// reset day counters
