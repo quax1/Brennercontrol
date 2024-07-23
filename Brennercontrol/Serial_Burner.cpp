@@ -114,7 +114,7 @@ void checkSerial_incoming_msg(){
 
 		case 100:    //
 		{
-			db_pln("** cmd 100 received - device configuration");
+			db_pln("** cmd 100 received - new device configuration for slave");
 			// Datastructure for device configuration Burner Control
 			/*
 			struct Rx_device_configuration_burner
@@ -147,7 +147,7 @@ void checkSerial_incoming_msg(){
 			// send end message
 			struct Termination_Msg_ConfigOK_Struct  EndMsg;
 			EndMsg.receiver = 1;        // An   1: master, 2: brennercontrol
-			EndMsg.sender = 2;          // Von  1: master, 2: brennercontrol
+			EndMsg.sender = 2;          // Von  1: master, 2: brennercontrol, 3, powerlogger, 4 garden
 			EndMsg.command = 100;                 // 0:empty answer,  1: current sensor values, 2: day average
 			EndMsg.version = dc.dcVersion;
 
