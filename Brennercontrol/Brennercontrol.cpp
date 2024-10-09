@@ -1,7 +1,7 @@
 #include "Brennercontrol.h"
 
 
-// Subs
+// Subs  test
 
 void Day_average_sampling(bool Firstrun) {
 			// *****   make a measurement every 30 min for average day temperature
