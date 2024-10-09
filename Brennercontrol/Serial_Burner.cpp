@@ -98,6 +98,18 @@ void checkSerial_incoming_msg(){
 				delay(100); // Ausreichend um buffer im empfänger zu leeren
 			}
 
+	        // send startup message
+			if (result.Startup_Msg.transmitted_flag == 0) {    //not yet transmitted
+				db_pln("*** send startup message");
+				result.Startup_Msg.transmitted_flag  = 100;  //
+				result.Startup_Msg.receiver=1;  // An   1: master, 2: brennercontrol
+				result.Startup_Msg.sender = 2;	// Von  1: master, 2: brennercontrol 3 powerlogger  4  garden
+				transmit_buf(&result.Startup_Msg, sizeof(result.Startup_Msg));
+				delay(100); // Ausreichend um buffer im empfänger zu leeren
+			}
+
+
+
 			// send end message
 
 			struct Termination_Msg_Struct  EndMsg;

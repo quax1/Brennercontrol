@@ -235,6 +235,7 @@ struct all_result_data_objects
 	struct Transmit_Sensors_Struct sensordata;
 	struct DayAverageStruct DayAverage;
 	struct CurrentBurntimeStruct CurrentBurntime;
+	struct Transmit_Startup_Msg_Struct Startup_Msg;
 };
 extern struct all_result_data_objects result;
 

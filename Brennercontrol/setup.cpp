@@ -1,5 +1,14 @@
 #include "Brennercontrol.h"
 
+#if __has_include("gitcommit.h")
+	#include "gitcommit.h"
+#else
+	static const char* GIT_INFO = "Git version information not present.\r\n";
+	static const char* GIT_HASH = "no Info";
+	static const char* GIT_UNCOMMITTED = "?";
+	static const char* GIT_ID = "?";
+#endif
+
 void startup_pin(const byte pin){
 	pinMode(pin, OUTPUT);
 	digitalWrite(pin, HIGH); delay(100); digitalWrite(pin, LOW); delay(100);
@@ -11,8 +20,16 @@ void setup()
   // initialize Serial ***********************************
   Serial.begin(9600);
   delay(300);
-  Serial.println(SKETCH_NAME);
-  Serial.print("Compiled:  "); Serial.print(__DATE__);  Serial.print(" ");  Serial.println( __TIME__);
+
+  Serial.print(F("Compiled: "));  Serial.print(F(__DATE__)); Serial.print(F(" ")); Serial.println(F( __TIME__));
+  Serial.println(GIT_INFO);
+  Serial.println(GIT_ID);
+  Serial.print("uncommited: "); Serial.println(GIT_UNCOMMITTED_BYTE);
+
+  // make startup message
+  result.Startup_Msg.transmitted_flag = 0;
+  strcpy(result.Startup_Msg.Commit_ID8, GIT_ID  );
+  result.Startup_Msg.UnCommited = GIT_UNCOMMITTED_BYTE;
 
   //pinMode(interruptPin, INPUT_PULLUP);
   //attachInterrupt (digitalPinToInterrupt(interruptPin), check_burner_isr_int0, RISING);
