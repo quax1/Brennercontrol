@@ -123,8 +123,8 @@ Serial.println(F("*** Radio disabled"));
   db_pxln("addr_gesamt_brenndauer_last_day  ", addr_gesamt_brenndauer_last_day);
   
   db_pxln("gesamt_brenndauer last daay  ", gesamt_brenndauer_last_day);
-  db_pln(temp_meas_count);
-  db_pln(average_temp);
+//  db_pln(temp_meas_count);
+//  db_pln(average_temp);
 
   // initialize Brenner Sensor
   pinMode(PIN_BRENNER_RELAIS, INPUT_PULLUP);
